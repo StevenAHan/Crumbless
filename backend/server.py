@@ -1,17 +1,18 @@
-from flask import Flask 
+from flask import Flask, jsonify
  
 app = Flask(__name__)
  
- 
-@app.route('/data')
-def get_time():
- 
-    return {
-        'Name':"geek", 
-        "Age":"22",
-        "Date":x, 
-        "programming":"python"
-        }
+cities = "hihihi"
+
+@app.get('/data')
+def get_data() -> str:
+    """
+    Endpoint to return clique data.
+    """
+    
+    return jsonify({
+        'Cities': cities
+    })
 
 
 if __name__ == '__main__':
