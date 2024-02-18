@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import pandas as pd
 from flask_mysqldb import MySQL
  
@@ -35,7 +35,26 @@ def get_data() -> str:
     """
     
     return jsonify({
-        'Cities': cities
+        'Cities': []
+    })
+
+
+@app.post("/test")
+def test():
+    print(request.form)
+    return jsonify({
+        'message': 'Hello, World!'
+    })
+
+
+@app.post('/create/ingredient')
+def create_ingredient():
+    print(request.form)
+    # name = request.form['name']
+    # statement = f"INSERT INTO ingredients (name) VALUES ('{name}')"
+    # runstatement(statement)
+    return jsonify({
+        'message': 'Ingredient created!'
     })
 
 

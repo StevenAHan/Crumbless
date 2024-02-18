@@ -1,5 +1,18 @@
 import { useState, useEffect } from "react";
 
+async function sendData(data) {
+    const formData = new URLSearchParams();
+    Object.keys(data).forEach(key => formData.append(key, data[key]));
+    return await fetch('/api/test', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: formData
+    }).then(data => data.json());
+}
+
+
 function Test() {
     // usestate for setting a javascript
     // object for storing and using data
@@ -15,6 +28,7 @@ function Test() {
                 });
             })
         })
+        testSend({data: "test"})
     }, []);
  
     return (

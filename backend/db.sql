@@ -24,6 +24,7 @@ CREATE TABLE Dish (
 CREATE TABLE Ingredient (
     ingredient_id INT PRIMARY KEY AUTO_INCREMENT,
     ingredient_name VARCHAR(255) NOT NULL,
+    ingredient_desc TEXT NOT NULL,
     ingredient_img VARCHAR(255) DEFAULT 'default.png',
     creation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     user_created BOOLEAN DEFAULT 0,
