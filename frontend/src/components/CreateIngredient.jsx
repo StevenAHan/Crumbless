@@ -17,12 +17,13 @@ async function sendIngredientCreationRequest(data) {
 const CreateIngredient = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState({});
   const [qType, setQType] = useState('');
+  const [cBU, setCBU] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    sendIngredientCreationRequest({name, description}).then(data => {
+    sendIngredientCreationRequest({name, description, image, qType, cBU}).then(data => {
         if(data.message == "Ingredient created successfully") {
             alert("Ingredient created successfully");
         } else {
@@ -30,6 +31,14 @@ const CreateIngredient = () => {
         }
     });
   };
+
+  function checkVal() {
+    console.log(name);
+    console.log(description);
+    console.log(image);
+    console.log(qType);
+    console.log(cBU);
+  }
 
   return (
     <div>
@@ -57,7 +66,6 @@ const CreateIngredient = () => {
           Image:
           <input
             type="file"
-            value={image}
             onChange={(e) => setImage(e.target.value)}
           />
         </label>
@@ -70,7 +78,18 @@ const CreateIngredient = () => {
             onChange={(e) => setQType(e.target.value)}
           />
         </label>
-        <button type="submit">Submit</button>
+        <br />
+        <label>
+          Created By User:
+          <input
+            type="checkbox"
+            value={cBU}
+            onChange={(e) => setCBU(e.target.value)}  
+          />
+        </label>    
+        <br />
+        <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
+        <button onClick={() => checkVal()}>checkVals</button>
       </form>
     </div>
   );
