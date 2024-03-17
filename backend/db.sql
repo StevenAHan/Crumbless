@@ -33,10 +33,10 @@ CREATE TABLE Ingredient (
 
 CREATE TABLE Dish_Ingredient (
     dish_ingredient_id INT PRIMARY KEY AUTO_INCREMENT,
-    dish_id INT REFERENCES Dish(dish_id),,
+    dish_id INT REFERENCES Dish(dish_id),
     ingredient_id INT REFERENCES Ingredient(ingredient_id),
     essential BOOLEAN DEFAULT 0,
-    quantity FLOAT NOT NULL,
+    quantity FLOAT NOT NULL
 );
 
 CREATE TABLE Dish_Ingredient_Alternative (
@@ -80,3 +80,15 @@ CREATE TABLE Food_Style (
     style_description VARCHAR(255) NOT NULL,
     style_img VARCHAR(255) DEFAULT 'default.png'
 );
+
+
+
+
+INSERT INTO User (username, password, email, first_name, last_name)
+VALUES ('john_doe', 'password123', 'john@example.com', 'John', 'Doe');
+
+INSERT INTO User (username, password, email, first_name, last_name)
+VALUES ('jane_smith', 'qwerty456', 'jane@example.com', 'Jane', 'Smith');
+
+INSERT INTO User (username, password, email, first_name, last_name, acc_type)
+VALUES ('admin', 'adminpass', 'admin@example.com', 'Admin', 'User', 1);

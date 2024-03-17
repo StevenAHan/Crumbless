@@ -12,10 +12,12 @@ import Header from './components/Logout';
 import useToken from './components/useToken';
 import ErrorPage from './components/ErrorPage';
 import LoggedLogin from './components/LoggedLogin';
+import Register from './components/Register';
 
 
 function App() {
   const { token, removeToken, setToken } = useToken();
+  const { user, setUser } = useState({});
 
   return (
     <>
@@ -29,6 +31,7 @@ function App() {
           {!token && token!=="" &&token!== undefined?  
             <>
               <Route path='/login' exact element={<Login setToken={setToken} />} />
+              <Route path='/register' exact element={<Register />} />
             </> :(
               <>
                   <Route path='/login' exact element={<LoggedLogin />} />

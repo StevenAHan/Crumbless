@@ -1,57 +1,63 @@
 import { useState } from 'react';
-import axios from "axios";
 
 function Login(props) {
 
-    const [loginForm, setloginForm] = useState({
-      email: "",
+    const [loginForm, setLoginForm] = useState({
+      username: "",
       password: ""
-    })
+    });
 
     function logMeIn(event) {
-      axios({
+      fetch("/api/login", {
         method: "POST",
-        url:"/api/token",
-        data:{
-          email: loginForm.email,
-          password: loginForm.password
-         }
-      })
-      .then((response) => {
-        props.setToken(response.data.access_token);
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(loginForm)
+      }).then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      }).then((data) => {
+        console.log(data);
+        props.setToken(data.access_token);
         window.location.replace("/profile");
       }).catch((error) => {
-        alert("Invalid email or password");
+        console.error('There was an error!', error);
+        alert("Invalid username or password");
         if (error.response) {
           console.log(error.response)
           console.log(error.response.status)
           console.log(error.response.headers)
         }
-      })
+      });
 
-      setloginForm(({
-        email: "",
-        password: ""}))
+      setLoginForm({
+        username: "",
+        password: ""
+      });
 
-      event.preventDefault()
+      event.preventDefault();
     }
 
     function handleChange(event) { 
-      const {value, name} = event.target
-      setloginForm(prevNote => ({
+      const { value, name } = event.target;
+      setLoginForm(prevNote => ({
           ...prevNote, [name]: value})
-      )}
+      );
+    }
 
     return (
       <div>
         <h1>Login</h1>
           <form className="login">
             <input onChange={handleChange} 
-                  type="email"
-                  text={loginForm.email} 
-                  name="email" 
-                  placeholder="Email" 
-                  value={loginForm.email} />
+                  type="username"
+                  text={loginForm.username} 
+                  name="username" 
+                  placeholder="Username" 
+                  value={loginForm.username} />
             <input onChange={handleChange} 
                   type="password"
                   text={loginForm.password} 
