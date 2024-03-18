@@ -17,11 +17,12 @@ mysql = MySQL(app)
 
 bcrypt = Bcrypt(app) 
 
-app.config["JWT_SECRET_KEY"] = "please-remember-to-change-me"
+# To store later into environment variable
+secretKey = "hello!"
+
+app.config["JWT_SECRET_KEY"] = secretKey
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(app)
-secretKey = "asdsad"
-
 
 def runStatement(statement):
     cursor = mysql.connection.cursor()
@@ -34,6 +35,13 @@ def runStatement(statement):
         df = pd.DataFrame(results, columns=column_names)
     cursor.close()
     return df
+
+def getUserInfo():
+    username = get_jwt_identity()
+    user_info = runStatement(f"SELECT * FROM user WHERE username = '{username}'")
+    if(user_info.shape[0] == 0):
+        return jsonify({"msg": "User not found"}), 404
+    return user_info.to_json(orient="records")
 
 def get_password(username, df):
     password = df.loc[df['username'] == username, 'password'].values
@@ -59,10 +67,6 @@ def refresh_expiring_jwts(response):
         # Case where there is not a valid JWT. Just return the original respone
         return response
 
-# def create_access_token_personal(email):
-#     a_token = str(hash(email+secretKey))
-#     print(a_token)
-
 @app.route('/login', methods=["POST"])
 def create_token():
     users = runStatement("SELECT * FROM user")
@@ -82,7 +86,6 @@ def create_token():
         return {"msg": "Wrong email or password"}, 401
     access_token = create_access_token(identity=username)
     response = {"access_token": access_token}
-    print(response)
     return response
 
 @app.route("/register", methods=["POST"])
@@ -106,14 +109,9 @@ def create_user():
 
 
 @app.route('/profile')
-# @jwt_required()
+@jwt_required()
 def my_profile():
-    response_body = {
-        "name": "Steven",
-        "about" :"If this works i am a genius"
-    }
-
-    return response_body
+    return getUserInfo()
 
 @app.route("/logout", methods=["POST"])
 def logout():
@@ -123,6 +121,7 @@ def logout():
 
 
 @app.post('/create/ingredient')
+@jwt_required()
 def create_ingredient():
     print(request.form)
     # name = request.form['name']
@@ -131,6 +130,16 @@ def create_ingredient():
     return jsonify({
         'message': 'Ingredient created!'
     })
+
+@app.route("/getuserinfo")
+@jwt_required()
+def get_user_info():
+    print("hello")
+    username = get_jwt_identity()
+    user_info = runStatement(f"SELECT * FROM user WHERE username = '{username}'")
+    if(user_info.shape[0] == 0):
+        return jsonify({"msg": "User not found"}), 404
+    return user_info.to_json(orient="records")
 
 
 if __name__ == '__main__':

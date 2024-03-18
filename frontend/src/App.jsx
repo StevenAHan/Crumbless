@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -17,7 +17,21 @@ import Register from './components/Register';
 
 function App() {
   const { token, removeToken, setToken } = useToken();
-  const { user, setUser } = useState({});
+  // const { userInfo, setUserInfo } = useState({});
+
+  // useEffect(() => {
+  //   fetch('/api/profile', {
+  //       method: 'GET',
+  //       headers: {
+  //           Authorization: 'Bearer ' + token
+  //       }
+  //   }).then((response) => {
+  //       return response.json();
+  //     }).then((data) => {
+  //         setUserInfo(data[0]);
+  //     });
+  // },[]);
+
 
   return (
     <>

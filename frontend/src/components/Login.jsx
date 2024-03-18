@@ -20,7 +20,6 @@ function Login(props) {
         }
         return response.json();
       }).then((data) => {
-        console.log(data);
         props.setToken(data.access_token);
         window.location.replace("/profile");
       }).catch((error) => {
