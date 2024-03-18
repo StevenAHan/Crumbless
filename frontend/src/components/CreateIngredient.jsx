@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import '../css/createIngredient.css';
 
 async function sendIngredientCreationRequest(data) {
     const formData = new URLSearchParams();
@@ -41,9 +42,9 @@ const CreateIngredient = () => {
   }
 
   return (
-    <div>
+    <div className='create-ingredient-container'>
       <h1>Create Ingredient</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}  className='create-ingredient-form'>
         <label>
           Name:
           <input
@@ -89,6 +90,8 @@ const CreateIngredient = () => {
         </label>    
         <br />
         <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
+
+        <br />
         <button onClick={() => checkVal()}>checkVals</button>
       </form>
     </div>

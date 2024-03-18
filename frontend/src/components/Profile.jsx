@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import defaultPic from "../assets/profile_pictures/default.png";
+import "../css/profile.css";
 
 function Profile(props) {
     const [userInfo, setUserInfo] = useState({
@@ -47,18 +48,17 @@ function Profile(props) {
     },[]);
     
     return (
-        <>
-            <h1>PROFILE</h1>
-            <img src={defaultPic} alt="whoops" className="profile_picture"/>
-            <p>Username: {userInfo.username}</p>
-            <p>Email: {userInfo.email}</p>
-            <p>First Name: {userInfo.first_name}</p>
-            <p>Last Name: {userInfo.last_name}</p>
+        <div className="profile-container">
+            <h1>Hello, {userInfo.first_name} ({userInfo.username})</h1>
+            <img src={defaultPic} alt="whoops" className="profile-picture"/>
+            <div className="profile-info"> 
+                
+            </div>
 
-            <button onClick={logMeOut}> 
+            <button onClick={logMeOut} className="logout-btn"> 
                 Logout
             </button>
-        </>
+        </div>
     );
 }
  

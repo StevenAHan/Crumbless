@@ -121,7 +121,6 @@ def logout():
 
 
 @app.post('/create/ingredient')
-@jwt_required()
 def create_ingredient():
     print(request.form)
     # name = request.form['name']
@@ -140,6 +139,12 @@ def get_user_info():
     if(user_info.shape[0] == 0):
         return jsonify({"msg": "User not found"}), 404
     return user_info.to_json(orient="records")
+
+
+@app.route("/get/ingredients")
+def get_ingredients():
+    ingredients = runStatement("SELECT * FROM ingredients")
+    return ingredients.to_json(orient="records")
 
 
 if __name__ == '__main__':

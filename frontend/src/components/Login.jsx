@@ -48,9 +48,9 @@ function Login(props) {
     }
 
     return (
-      <div>
+      <div className='register-container'>
         <h1>Login</h1>
-          <form className="login">
+          <form className="register-form">
             <input onChange={handleChange} 
                   type="username"
                   text={loginForm.username} 

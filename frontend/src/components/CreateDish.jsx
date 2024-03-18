@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 function CreateDish() {
  
     return (
-        <>
+        <div className='register-container'>
             <h1>Create/Submit a New Dish</h1>
 
-            <form>
+            <form  className='register-form'>
                 <div>
                     <label htmlFor="name">Name</label>
                     <input type="text" id="name" name="name" required />
@@ -31,7 +31,7 @@ function CreateDish() {
                     <button type="submit">Submit</button>
                 </div>
             </form>
-        </>
+        </div>
     );
 }
  
