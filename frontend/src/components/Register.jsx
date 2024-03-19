@@ -19,18 +19,10 @@ function Register() {
         }).then((response) => {
             if(response.status === 401) {
                 alert("Username taken. Please try again with a different username.")
-            }
-            else {
+            } else {
                 alert("Account Successfully Created! Please log in.");
                 window.location.replace("/login");
             }
-        }).catch((error) => {
-        alert("Unable to Register. Please try again.");
-        if (error.response) {
-            console.log(error.response)
-            console.log(error.response.status)
-            console.log(error.response.headers)
-        }
         });
     }
 

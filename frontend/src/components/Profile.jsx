@@ -52,7 +52,16 @@ function Profile(props) {
             <h1>Hello, {userInfo.first_name} ({userInfo.username})</h1>
             <img src={defaultPic} alt="whoops" className="profile-picture"/>
             <div className="profile-info"> 
-                
+
+            </div>
+
+            <div className="fridge">
+                <h3>Your Fridge</h3>
+                <ul>
+                    <li>Ingredient 1</li>
+                    <li>Ingredient 2</li>
+                    <li>Ingredient 3</li>
+                </ul>
             </div>
 
             <button onClick={logMeOut} className="logout-btn"> 

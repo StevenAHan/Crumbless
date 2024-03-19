@@ -10,7 +10,7 @@ async function sendIngredientCreationRequest(data) {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       body: formData
-    }).then(data => data.json());
+    }).then(response => response.json());
 }
 
 
@@ -18,13 +18,13 @@ async function sendIngredientCreationRequest(data) {
 const CreateIngredient = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [image, setImage] = useState({});
+  // const [image, setImage] = useState({});
   const [qType, setQType] = useState('');
   const [cBU, setCBU] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    sendIngredientCreationRequest({name, description, image, qType, cBU}).then(data => {
+    sendIngredientCreationRequest({name, description, qType, cBU}).then(data => {
         if(data.message == "Ingredient created successfully") {
             alert("Ingredient created successfully");
         } else {
@@ -36,7 +36,6 @@ const CreateIngredient = () => {
   function checkVal() {
     console.log(name);
     console.log(description);
-    console.log(image);
     console.log(qType);
     console.log(cBU);
   }
@@ -62,14 +61,14 @@ const CreateIngredient = () => {
             onChange={(e) => setDescription(e.target.value)}
           />
         </label>
-        <br />
+        {/* <br />
         <label>
           Image:
           <input
             type="file"
             onChange={(e) => setImage(e.target.value)}
           />
-        </label>
+        </label> */}
         <br />
         <label>
           Quantity Type:

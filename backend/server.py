@@ -5,6 +5,8 @@ from datetime import datetime, timedelta, timezone
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, unset_jwt_cookies, jwt_required, JWTManager
 import json
+from bs4 import BeautifulSoup
+
  
 app = Flask(__name__)
 
@@ -23,6 +25,7 @@ secretKey = "hello!"
 app.config["JWT_SECRET_KEY"] = secretKey
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(app)
+
 
 def runStatement(statement):
     cursor = mysql.connection.cursor()
@@ -70,17 +73,13 @@ def refresh_expiring_jwts(response):
 @app.route('/login', methods=["POST"])
 def create_token():
     users = runStatement("SELECT * FROM user")
-    print(request.json)
     username = request.json.get("username", None)
     password = request.json.get("password", None)
     # Find the hashed password associated with the username
     if(users[users["username"] == username].shape[0] == 0):
         return {"msg": "Incorrect Username"}, 401
     foundPass = get_password(username, users)
-    print("--------------------------------------")
-    print(foundPass, password)
     is_valid = bcrypt.check_password_hash(foundPass, password)
-    print(is_valid)
     # Username and password do not match
     if not is_valid:
         return {"msg": "Wrong email or password"}, 401
@@ -122,10 +121,20 @@ def logout():
 
 @app.post('/create/ingredient')
 def create_ingredient():
-    print(request.form)
-    # name = request.form['name']
-    # statement = f"INSERT INTO ingredients (name) VALUES ('{name}')"
-    # runstatement(statement)
+    print("hi")
+    name = request.form.get("name", None)
+    description = request.form.get("description", None)
+    qType = request.form.get("qType", None)
+    cBU = request.form.get("cBU", None)
+
+    print(name, description, qType, cBU)
+
+    # check if ingredient already exists
+    if(runStatement(f"SELECT * FROM ingredient WHERE ingredient_name = '{name}'").shape[0] > 0):
+        return {"msg": "Ingredient already exists"}, 401
+    
+    statement = f"INSERT INTO ingredient (ingredient_name, ingredient_desc, quantity_type, user_created) VALUES ('{name}', '{description}', '{qType}', '{cBU}')"
+    runStatement(statement)
     return jsonify({
         'message': 'Ingredient created!'
     })
@@ -143,7 +152,7 @@ def get_user_info():
 
 @app.route("/get/ingredients")
 def get_ingredients():
-    ingredients = runStatement("SELECT * FROM ingredients")
+    ingredients = runStatement("SELECT * FROM ingredient")
     return ingredients.to_json(orient="records")
 
 

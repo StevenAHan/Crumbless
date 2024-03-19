@@ -28,7 +28,7 @@ CREATE TABLE Ingredient (
     ingredient_img VARCHAR(255) DEFAULT 'default.png',
     creation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     user_created BOOLEAN DEFAULT 0,
-    quantity_type VARCHAR(255) NOT NULL
+    quantity_type VARCHAR(255) NOT NULL DEFAULT 'gram'
 );
 
 CREATE TABLE Dish_Ingredient (
@@ -77,11 +77,10 @@ CREATE TABLE Dish_Style (
 CREATE TABLE Food_Style (
     style_id INT PRIMARY KEY AUTO_INCREMENT,
     style_name VARCHAR(255) NOT NULL,
+    style_category VARCHAR(255) NOT NULL,
     style_description VARCHAR(255) NOT NULL,
     style_img VARCHAR(255) DEFAULT 'default.png'
 );
-
-
 
 
 INSERT INTO User (username, password, email, first_name, last_name)
