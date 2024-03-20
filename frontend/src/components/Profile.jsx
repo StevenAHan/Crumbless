@@ -73,24 +73,33 @@ function Profile(props) {
     }, [fridge]);
     
     return (
-        <div className="profile-container">
-            <h1>Hello, {userInfo.first_name} ({userInfo.username})</h1>
-            <img src={defaultPic} alt="whoops" className="profile-picture"/>
-            <div className="profile-info"> 
+        <>
+        {(userInfo.first_name === "") ? 
+        <>
 
+        </> :
+        <>
+            <div className="profile-container">
+                <h1>Hello, {userInfo.first_name} ({userInfo.username})</h1>
+                <img src={defaultPic} alt="whoops" className="profile-picture"/>
+                <div className="profile-info"> 
+
+                </div>
+
+                <div className="fridge">
+                    <h3>Your Fridge</h3>
+                    <ul>
+                        {fridgeItems}
+                    </ul>
+                </div>
+
+                <button onClick={logMeOut} className="logout-btn"> 
+                    Logout
+                </button>
             </div>
-
-            <div className="fridge">
-                <h3>Your Fridge</h3>
-                <ul>
-                    {fridgeItems}
-                </ul>
-            </div>
-
-            <button onClick={logMeOut} className="logout-btn"> 
-                Logout
-            </button>
-        </div>
+        </>
+        }
+        </>
     );
 }
  

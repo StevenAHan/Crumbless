@@ -30,6 +30,9 @@ function App() {
         return response.json();
       }).then((data) => {
           setUserInfo(data[0]);
+          if(data[0] === undefined) {
+            removeToken();
+          }
       });
   },[]);
 

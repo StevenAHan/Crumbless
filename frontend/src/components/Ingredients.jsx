@@ -5,16 +5,28 @@ function Ingredients(props) {
   const [ingredients, setIngredients] = useState([]);
   const [userIngredients, setUserIngredients] = useState([]);
   const [switchie, setSwitchie] = useState(false);
+  const [search, setSearch] = useState("");
 
     useEffect(() => {
-        fetch("/api/get/ingredients")
+        const formData = new URLSearchParams();
+        const data = {
+            search: search
+        }
+        Object.keys(data).forEach(key => formData.append(key, data[key]));
+        fetch("/api/get/ingredients", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: formData
+        })
         .then((res) => res.json())
         .then((data) => {
+            data = data.sort((a, b) => a.ingredient_name.localeCompare(b.ingredient_name));
             setIngredients(data);
         });
-
         
-    }, []);
+    }, [search]);
 
     useEffect(() => {
         fetch("/api/get/useringredient", {
@@ -25,7 +37,7 @@ function Ingredients(props) {
           })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
+                // organize data by alphabetical order
                 const ingNames = data.map((data) => data.ingredient_name);
                 const ingId = data.map((data) => data.ingredient_id);
                 setUserIngredients({ids: ingId, names: ingNames});
@@ -76,6 +88,9 @@ function Ingredients(props) {
         <>
         <h1>Ingredients</h1>
         <p>Select the ingredients you have. The ingredients you currently have are highlighted in green. (Water, salt, and pepper are the only ingredients we assume you have.)</p>
+        <div className="search-container">
+            <input type="text" placeholder="Search for ingredients" onChange={(e) => setSearch(e.target.value)} />
+        </div>
         <div className="ingredients-container">
             {ingredients.map((ingredient) => (
             <div

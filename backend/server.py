@@ -121,7 +121,6 @@ def logout():
 
 @app.post('/create/ingredient')
 def create_ingredient():
-    print("hi")
     name = request.form.get("name", None)
     description = request.form.get("description", None)
     qType = request.form.get("qType", None)
@@ -135,6 +134,7 @@ def create_ingredient():
     
     statement = f"INSERT INTO ingredient (ingredient_name, ingredient_desc, quantity_type, user_created) VALUES ('{name}', '{description}', '{qType}', '{cBU}')"
     runStatement(statement)
+
     return jsonify({
         'message': 'Ingredient created!'
     })
@@ -150,9 +150,13 @@ def get_user_info():
     return user_info.to_json(orient="records")
 
 
-@app.route("/get/ingredients")
+@app.route("/get/ingredients", methods=["POST"])
 def get_ingredients():
-    ingredients = runStatement("SELECT * FROM ingredient")
+    search = request.form.get("search", None)
+    if(search and search != ""):
+        ingredients = runStatement(f"SELECT * FROM ingredient WHERE ingredient_name LIKE '%{search}%'")
+    else:
+        ingredients = runStatement("SELECT * FROM ingredient")
     return ingredients.to_json(orient="records")
 
 @app.route("/get/useringredient")

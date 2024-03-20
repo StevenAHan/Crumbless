@@ -9,6 +9,11 @@
     padding: 5px;
     background-color: #f0f0f0;
     border-radius: 5px;
+    cursor: pointer;
+}
+
+.ingredients-item:hover {
+    background-color: #e0e0e0;
 }
 
 .ingredients-item h2 {
@@ -19,4 +24,8 @@
 
 .green {
     background-color: #00ff00;
+}
+
+.green:hover {
+    background-color: #00dd00;
 }
