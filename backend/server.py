@@ -155,6 +155,37 @@ def get_ingredients():
     ingredients = runStatement("SELECT * FROM ingredient")
     return ingredients.to_json(orient="records")
 
+@app.route("/get/useringredient")
+@jwt_required()
+def get_user_ingredients():
+    username = get_jwt_identity()
+    ingredients = runStatement(f'''SELECT ingredient.ingredient_id, user.user_id, ingredient.ingredient_name FROM ingredient 
+                               INNER JOIN user_ingredient ON ingredient.ingredient_id = user_ingredient.ingredient_id
+                               INNER JOIN user ON user_ingredient.user_id = user.user_id
+                               WHERE user.username = "{username}"''')
+    return ingredients.to_json(orient="records")
+
+@app.route("/add/useringredient", methods=["POST"])
+@jwt_required()
+def add_user_ingredient():
+    username = get_jwt_identity()
+    ingredient_id = request.form.get("ingredient_id", None)
+    quantity = request.form.get("quantity", None)
+    # Check if ingredient is valid
+    if(runStatement(f"SELECT * FROM ingredient WHERE ingredient_id = '{ingredient_id}'").shape[0] == 0):
+        return jsonify({"msg": "Invalid ingredient"}), 401
+    statement = f"INSERT INTO user_ingredient (user_id, ingredient_id, quantity) VALUES ((SELECT user_id FROM user WHERE username = '{username}'), '{ingredient_id}', '{quantity}')"
+    runStatement(statement)
+    return jsonify({"msg": "Ingredient added!"})
+
+@app.route("/delete/useringredient", methods=["DELETE"])
+@jwt_required()
+def delete_user_ingredient():
+    username = get_jwt_identity()
+    ingredient_id = request.form.get("ingredient_id", None)
+    statement = f"DELETE FROM user_ingredient WHERE user_id = (SELECT user_id FROM user WHERE username = '{username}') AND ingredient_id = '{ingredient_id}'"
+    runStatement(statement)
+    return jsonify({"msg": "Ingredient deleted!"})
 
 if __name__ == '__main__':
     app.run(debug=True)

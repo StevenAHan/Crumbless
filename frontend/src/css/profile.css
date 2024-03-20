@@ -41,3 +41,31 @@
     background-color: #d32f2f;
   }
   
+  .fridge {
+    margin-top: 20px; /* Adjust spacing as needed */
+  }
+  
+  .fridge h3 {
+    font-size: 1.5em; /* Example font size */
+    margin-bottom: 10px; /* Adjust spacing as needed */
+  }
+  
+  .fridge ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0; /* Remove default padding */
+  }
+  
+  .fridge ul li {
+    width: calc(33.33% - 30px);
+    margin: 5px;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+  }
+  
+  .fridge ul li h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+  }

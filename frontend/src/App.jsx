@@ -49,7 +49,7 @@ function App() {
           <Route path='/' exact element={<Home/>} />
           <Route path='/create/dish' element={<CreateDish/>} />
           <Route path='/create/ingredient' element={<CreateIngredient/>} />
-          <Route path='/ingredients' element={<Ingredients/>} />
+          <Route path='/ingredients' element={<Ingredients token={token}/>} />
           {!token && token!=="" &&token!== undefined?  
             <>
               <Route path='/login' exact element={<Login setToken={setToken} />} />

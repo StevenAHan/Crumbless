@@ -16,7 +16,7 @@ function NavPostLogin() {
                     <a href="/create/dish">Create Dish</a>
                 </li>
                 <li>
-                    <a href="/create/ingredient">Create Ingredient</a>
+                    <a href="/ingredients">List of Ingredients</a>
                 </li>
             </ul>
             

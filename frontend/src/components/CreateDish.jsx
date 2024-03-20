@@ -24,6 +24,10 @@ function CreateDish() {
                     {/* todo */}
                 </div>
                 <div>
+                    <label htmlFor="food-styles">Cuisines</label>
+                    {/* todo */}
+                </div>
+                <div>
                     <label htmlFor="image">Image</label>
                     <input type="file" id="image" name="image" required />
                 </div>

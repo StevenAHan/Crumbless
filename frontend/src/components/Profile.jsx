@@ -12,6 +12,9 @@ function Profile(props) {
         user_img: ""
     });
 
+    const [fridge, setFridge] = useState([]);
+    const [fridgeItems, setFridgeItems] = useState([]);
+
     function logMeOut() {
         axios({
           method: "POST",
@@ -45,7 +48,29 @@ function Profile(props) {
         }).then((data) => {
             setUserInfo(data[0]);
         });
+
+        fetch('/api/get/useringredient', {
+            method: 'GET',
+            headers: {
+                Authorization: 'Bearer ' + props.token
+            }
+        }).then((response) => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+        }).then((data) => {
+            setFridge(data);
+        });
     },[]);
+
+    useEffect(() => {
+        let items = [];
+        fridge.forEach((item) => {
+            items.push(<li>{item.ingredient_name}</li>);
+        });
+        setFridgeItems(items);
+    }, [fridge]);
     
     return (
         <div className="profile-container">
@@ -58,9 +83,7 @@ function Profile(props) {
             <div className="fridge">
                 <h3>Your Fridge</h3>
                 <ul>
-                    <li>Ingredient 1</li>
-                    <li>Ingredient 2</li>
-                    <li>Ingredient 3</li>
+                    {fridgeItems}
                 </ul>
             </div>
 
