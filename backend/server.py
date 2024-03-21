@@ -191,5 +191,15 @@ def delete_user_ingredient():
     runStatement(statement)
     return jsonify({"msg": "Ingredient deleted!"})
 
+
+@app.route("/get/foodstyles", methods=["POST"])
+def get_food_styles():
+    foodtype = request.form.get("foodtype", None)
+    if(foodtype and foodtype != ""):
+        food_styles = runStatement(f"SELECT * FROM food_style WHERE style_type LIKE '%{foodtype}%'")
+    else:
+        food_styles = runStatement("SELECT * FROM food_style")
+    return food_styles.to_json(orient="records")
+
 if __name__ == '__main__':
     app.run(debug=True)

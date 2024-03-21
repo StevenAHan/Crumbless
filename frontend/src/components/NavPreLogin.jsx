@@ -16,6 +16,9 @@ function NavPreLogin() {
                     <a href="/create/dish">Create Dish</a>
                 </li>
                 <li>
+                    <a href="/foodstyles">List of Food Styles</a>
+                </li>
+                <li>
                     <a href="/ingredients">List of Ingredients</a>
                 </li>
             </ul>

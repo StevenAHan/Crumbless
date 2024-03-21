@@ -14,6 +14,7 @@ import ErrorPage from './components/ErrorPage';
 import LoggedLogin from './components/LoggedLogin';
 import Register from './components/Register';
 import Ingredients from './components/Ingredients';
+import FoodStyles from './components/FoodStyles';
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
           <Route path='/create/dish' element={<CreateDish/>} />
           <Route path='/create/ingredient' element={<CreateIngredient/>} />
           <Route path='/ingredients' element={<Ingredients token={token}/>} />
+          <Route path='/foodstyles' element={<FoodStyles/>} />
           {!token && token!=="" &&token!== undefined?  
             <>
               <Route path='/login' exact element={<Login setToken={setToken} />} />
