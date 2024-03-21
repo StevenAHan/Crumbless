@@ -27,6 +27,10 @@ function FoodStyles() {
         return organizedFoodStyles;
     };
 
+    const formatText = (text) => {
+        return text.charAt(0).toUpperCase() + text.slice(1).replace(/_/g, ' ');
+    };
+
     const organizedFoodStyles = organizeFoodStylesByType();
 
     return (
@@ -35,10 +39,10 @@ function FoodStyles() {
             <div className="fs-container">
                 {Object.keys(organizedFoodStyles).map((type) => (
                     <div key={type} className="food-style-type">
-                        <h2>{type}</h2>
+                        <h2>{formatText(type)}</h2>
                         <div className="fs-items-container">
                             {organizedFoodStyles[type].map((foodStyle) => (
-                                <div key={foodStyle.style_id} className="fs-item">
+                                <div key={foodStyle.style_id} className={`fs-item ${type.toLowerCase()}`}>
                                     <h3>{foodStyle.style_name}</h3>
                                 </div>
                             ))}

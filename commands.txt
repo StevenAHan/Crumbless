@@ -1,0 +1,6 @@
+cd backend
+./venv/Scripts/activate
+python server.python
+
+cd frontend
+npm run dev
