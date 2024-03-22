@@ -4,7 +4,7 @@
 }
 
 .ingredients-item {
-    width: calc(33.33% - 30px);
+    width: calc(20% - 20px);
     margin: 5px;
     padding: 5px;
     background-color: #f0f0f0;

@@ -33,6 +33,7 @@ function App() {
           setUserInfo(data[0]);
           if(data[0] === undefined) {
             removeToken();
+            window.location.replace("/login");
           }
       });
   },[]);
