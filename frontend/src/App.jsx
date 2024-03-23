@@ -15,6 +15,7 @@ import LoggedLogin from './components/LoggedLogin';
 import Register from './components/Register';
 import Ingredients from './components/Ingredients';
 import FoodStyles from './components/FoodStyles';
+import Dishes from './components/Dishes';
 
 
 function App() {
@@ -22,22 +23,23 @@ function App() {
   const [ userInfo, setUserInfo ] = useState({});
 
   useEffect(() => {
-    fetch('/api/profile', {
+    if(token) {
+      fetch('/api/profile', {
         method: 'GET',
         headers: {
             Authorization: 'Bearer ' + token
         }
-    }).then((response) => {
-        return response.json();
-      }).then((data) => {
-          setUserInfo(data[0]);
-          if(data[0] === undefined) {
-            removeToken();
-            window.location.replace("/login");
-          }
-      });
+      }).then((response) => {
+          return response.json();
+        }).then((data) => {
+            setUserInfo(data[0]);
+            if(data[0] === undefined) {
+              removeToken();
+            }
+        });
+    }
   },[]);
-
+    
 
   return (
     <>
@@ -56,6 +58,7 @@ function App() {
           <Route path='/create/ingredient' element={<CreateIngredient/>} />
           <Route path='/ingredients' element={<Ingredients token={token}/>} />
           <Route path='/foodstyles' element={<FoodStyles/>} />
+          <Route path='/dishes' element={<Dishes token={token}/>} />
           {!token && token!=="" &&token!== undefined?  
             <>
               <Route path='/login' exact element={<Login setToken={setToken} />} />

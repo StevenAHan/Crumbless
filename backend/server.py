@@ -26,6 +26,18 @@ app.config["JWT_SECRET_KEY"] = secretKey
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(app)
 
+# Exporting ingredients to a text file
+def export_ingredients():
+    ingredients = runStatement("SELECT * FROM ingredient")
+    with open('ingredients.txt', 'w', encoding='utf-8') as outfile:
+        for index, row in ingredients.iterrows():
+            outfile.write(f"{row['ingredient_name']}\n")
+
+def export_styles():
+    styles = runStatement("SELECT * FROM food_style")
+    with open('styles.txt', 'w', encoding='utf-8') as outfile:
+        for index, row in styles.iterrows():
+            outfile.write(f"{row['style_name']}\n")
 
 def runStatement(statement):
     cursor = mysql.connection.cursor()
@@ -142,7 +154,6 @@ def create_ingredient():
 @app.route("/getuserinfo")
 @jwt_required()
 def get_user_info():
-    print("hello")
     username = get_jwt_identity()
     user_info = runStatement(f"SELECT * FROM user WHERE username = '{username}'")
     if(user_info.shape[0] == 0):
@@ -200,6 +211,15 @@ def get_food_styles():
     else:
         food_styles = runStatement("SELECT * FROM food_style")
     return food_styles.to_json(orient="records")
+
+@app.route("/get/dish", methods=["GET", "POST"])
+def get_dish():
+    dish_id = request.args.get("dish_id", None)
+    if(dish_id and dish_id != ""):
+        dish = runStatement(f"SELECT * FROM dish WHERE dish_id = '{dish_id}'")
+    else:
+        dish = runStatement("SELECT * FROM dish")
+    return dish.to_json(orient="records")
 
 if __name__ == '__main__':
     app.run(debug=True)
