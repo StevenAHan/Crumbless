@@ -212,14 +212,27 @@ def get_food_styles():
         food_styles = runStatement("SELECT * FROM food_style")
     return food_styles.to_json(orient="records")
 
-@app.route("/get/dish", methods=["GET", "POST"])
+@app.route("/get/dishes", methods=["GET", "POST"])
 def get_dish():
-    dish_id = request.args.get("dish_id", None)
-    if(dish_id and dish_id != ""):
-        dish = runStatement(f"SELECT * FROM dish WHERE dish_id = '{dish_id}'")
+    search = request.form.get("search", None)
+    if(search and search != ""):
+        dishes = runStatement(f'''SELECT * FROM dish
+                            WHERE dish_name LIKE "%{search}%";''')
     else:
-        dish = runStatement("SELECT * FROM dish")
-    return dish.to_json(orient="records")
+        dishes = runStatement('''SELECT * FROM dish;''')
+    print(dishes)
+    dish_ingredients = []
+    dish_styles = []
+    for i in dishes.index:
+        ingredients = runStatement(f'''SELECT ingredient.ingredient_name FROM ingredient
+                                INNER JOIN dish_ingredient ON ingredient.ingredient_id = dish_ingredient.ingredient_id
+                                WHERE dish_ingredient.dish_id = {dishes['dish_id'][i]}''')
+        styles = runStatement(f'''SELECT food_style.style_name FROM food_style
+                                INNER JOIN dish_style ON food_style.style_id = dish_style.style_id
+                                WHERE dish_style.dish_id = {dishes["dish_id"][i]}''')
+        dish_ingredients.append(ingredients.to_json(orient="records"))
+        dish_styles.append(styles.to_json(orient="records"))
+    return {"dishes": dishes.to_json(orient="records"), "dish_ingredients": dish_ingredients, "dish_styles": dish_styles}
 
 if __name__ == '__main__':
     app.run(debug=True)

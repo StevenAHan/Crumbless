@@ -1,0 +1,33 @@
+DROP TABLE dish;
+DROP TABLE dish_ingredient;
+DROP TABLE dish_style;
+
+CREATE TABLE Dish (
+    dish_id INT PRIMARY KEY AUTO_INCREMENT,
+    dish_name VARCHAR(255) NOT NULL,
+    dish_description TEXT NOT NULL,
+    dish_ing_desc TEXT NOT NULL,
+    serves INT NOT NULL,
+    external_rating FLOAT DEFAULT 0,
+    external_num_of_ratings INT DEFAULT 0,
+    dish_img VARCHAR(255) DEFAULT 'default.png',
+    time_required INT NOT NULL,
+    source VARCHAR(255) NOT NULL,
+    verified BOOLEAN DEFAULT 0,
+    creation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    user_created BOOLEAN DEFAULT 0
+);
+
+CREATE TABLE Dish_Ingredient (
+    dish_ingredient_id INT PRIMARY KEY AUTO_INCREMENT,
+    dish_id INT REFERENCES Dish(dish_id),
+    ingredient_id INT REFERENCES Ingredient(ingredient_id),
+    essential BOOLEAN DEFAULT 0,
+    quantity FLOAT NOT NULL
+);
+
+CREATE TABLE Dish_Style (
+    dish_id INT REFERENCES Dish(dish_id),
+    style_id INT REFERENCES Style(style_id),
+    PRIMARY KEY (dish_id, style_id)
+);

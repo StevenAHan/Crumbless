@@ -127,6 +127,11 @@ def foodcomScraper(url):
     # Get the number of servings
     if(soup.find('span', class_='value svelte-1o10zxc')):
         servings = soup.find('span', class_='value svelte-1o10zxc').get_text(strip=True)
+        # Get rid of fractions
+        try:
+            int(servings)
+        except ValueError:
+            servings = 1
     else:
         servings = 1
 
@@ -159,20 +164,26 @@ def main():
     with open('links.txt', 'r', encoding='utf-8') as file:
         html = file.read()
     links = html.splitlines()
-    links = links[2000:]
+    # links = links[:100]
     statements = []
     i = 1
+    statements.append("DELETE FROM dish;")
+    statements.append("DELETE FROM dish_ingredient;")
+    statements.append("DELETE FROM dish_style;")
+
     for link in links:
         print(link, i)
         i += 1
         food = foodcomScraper(link)
         food["instructions"] = '~'.join(food["instructions"])
+        food['title'] = food['title'].replace('"', "'")
+        food["instructions"] = food["instructions"].replace('"', "'")
         statements.append(f'''INSERT INTO dish (dish_name, dish_description, serves, time_required, source) VALUES ("{food["title"]}", "{food["instructions"]}", {food["servings"]}, {food["total_time"]}, "{link}");''')
         for ing in food["ingredients"]:
-            statements.append(f'''INSERT INTO dish_ingredient (dish_id, ingredient_id) VALUES ((SELECT dish_id FROM dish WHERE dish_name LIKE "%{food["title"]}%"), (SELECT ingredient_id FROM ingredient WHERE ingredient_name LIKE "{ing}"));''')
+            statements.append(f'''INSERT INTO dish_ingredient (dish_id, ingredient_id) VALUES ((SELECT dish_id FROM dish WHERE dish_name LIKE "{food["title"]}" LIMIT 1), (SELECT ingredient_id FROM ingredient WHERE ingredient_name LIKE "{ing}" LIMIT 1));''')
         for style in food["styles"]:
-            statements.append(f'''INSERT INTO dish_style (dish_id, style_id) VALUES ((SELECT dish_id FROM dish WHERE dish_name LIKE "%{food["title"]}%"), (SELECT style_id FROM food_style WHERE style_name LIKE "{style}"));''')
-    with open('statements.txt', 'w', encoding='utf-8') as outfile:
+            statements.append(f'''INSERT INTO dish_style (dish_id, style_id) VALUES ((SELECT dish_id FROM dish WHERE dish_name LIKE "{food["title"]}" LIMIT 1), (SELECT style_id FROM food_style WHERE style_name LIKE "{style}" LIMIT 1));''')
+    with open('clean-statements.txt', 'w', encoding='utf-8') as outfile:
         for statement in statements:
             outfile.write(statement + '\n')
 
