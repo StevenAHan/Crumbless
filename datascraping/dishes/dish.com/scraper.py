@@ -81,7 +81,7 @@ def foodcomScraper(url):
     styles_in_food = []
 
     for style in styles:
-        if style.lower() in desc.lower():
+        if style.lower() in desc.lower() and style not in styles_in_food:
             styles_in_food.append(style)
 
     # Get the title of the recipe
@@ -106,7 +106,7 @@ def foodcomScraper(url):
     for ingredient in ingredients:
         ingredient = replace_with_berry(ingredient)
         cleaned_ingredient = find_specific_ingredient(ingredient, db_ingredients)
-        if(cleaned_ingredient != None):
+        if(cleaned_ingredient != None and cleaned_ingredient not in cleaned_ingredients):
             cleaned_ingredients.append(cleaned_ingredient)
         else:
             if("water" in ingredient or "salt" in ingredient or "pepper" in ingredient):
@@ -164,19 +164,22 @@ def main():
     with open('links.txt', 'r', encoding='utf-8') as file:
         html = file.read()
     links = html.splitlines()
-    # links = links[:100]
+    # links = links[130:132]
     statements = []
     i = 1
     statements.append("DELETE FROM dish;")
     statements.append("DELETE FROM dish_ingredient;")
     statements.append("DELETE FROM dish_style;")
-
+    foods = []
     for link in links:
         print(link, i)
         i += 1
         food = foodcomScraper(link)
+        if food["title"] in foods:
+            continue
         food["instructions"] = '~'.join(food["instructions"])
         food['title'] = food['title'].replace('"', "'")
+        foods.append(food["title"])
         food["instructions"] = food["instructions"].replace('"', "'")
         statements.append(f'''INSERT INTO dish (dish_name, dish_description, serves, time_required, source) VALUES ("{food["title"]}", "{food["instructions"]}", {food["servings"]}, {food["total_time"]}, "{link}");''')
         for ing in food["ingredients"]:

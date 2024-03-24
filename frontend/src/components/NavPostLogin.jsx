@@ -13,7 +13,7 @@ function NavPostLogin() {
                     <a href="/">Home</a>
                 </li>
                 <li>
-                    <a href="/create/dish">Create Dish</a>
+                    <a href="/dishes">List of Dishes</a>
                 </li>
                 <li>
                     <a href="/foodstyles">List of Food Styles</a>

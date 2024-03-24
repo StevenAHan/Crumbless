@@ -217,17 +217,16 @@ def get_dish():
     search = request.form.get("search", None)
     if(search and search != ""):
         dishes = runStatement(f'''SELECT * FROM dish
-                            WHERE dish_name LIKE "%{search}%";''')
+                            WHERE dish_name LIKE "%{search}%" LIMIT 100;''')
     else:
-        dishes = runStatement('''SELECT * FROM dish;''')
-    print(dishes)
+        dishes = runStatement('''SELECT * FROM dish LIMIT 100;''')
     dish_ingredients = []
     dish_styles = []
     for i in dishes.index:
-        ingredients = runStatement(f'''SELECT ingredient.ingredient_name FROM ingredient
+        ingredients = runStatement(f'''SELECT ingredient.ingredient_id, ingredient.ingredient_name FROM ingredient
                                 INNER JOIN dish_ingredient ON ingredient.ingredient_id = dish_ingredient.ingredient_id
                                 WHERE dish_ingredient.dish_id = {dishes['dish_id'][i]}''')
-        styles = runStatement(f'''SELECT food_style.style_name FROM food_style
+        styles = runStatement(f'''SELECT food_style.style_id, food_style.style_name, food_style.style_category FROM food_style
                                 INNER JOIN dish_style ON food_style.style_id = dish_style.style_id
                                 WHERE dish_style.dish_id = {dishes["dish_id"][i]}''')
         dish_ingredients.append(ingredients.to_json(orient="records"))

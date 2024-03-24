@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "../css/dish.css";
 
 function Dishes(props) {
     const [dishes, setDishes] = useState([]);
@@ -38,7 +39,7 @@ function Dishes(props) {
             for (let j = 0; j < dishInfo.dish_food_styles.length; j++) {
                 const style = dishInfo.dish_food_styles[j];
                 const styleHTMLItem = (
-                    <li key={style.food_style_id}>{style.food_style_name}</li>
+                    <li key={style.style_id} className={`${style.style_category}`}>{style.style_name}</li>
                 );
                 styleHTML.push(styleHTMLItem);
             }
