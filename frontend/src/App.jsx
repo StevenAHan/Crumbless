@@ -4,7 +4,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import NavPreLogin from './components/NavPreLogin';
 import NavPostLogin from './components/NavPostLogin';
-import Home from './components/Home';
+
+import PreLogHome from './components/PreLogHome';
+import PostLogHome from './components/PostLogHome';
+
 import CreateDish from './components/CreateDish';
 import CreateIngredient from './components/CreateIngredient';
 import Login from './components/Login';
@@ -53,7 +56,7 @@ function App() {
       <BrowserRouter>
         {/* Default routes */}
         <Routes>
-          <Route path='/' exact element={<Home/>} />
+          <Route path='/' exact element={<PreLogHome/>} />
           <Route path='/create/dish' element={<CreateDish/>} />
           <Route path='/create/ingredient' element={<CreateIngredient/>} />
           <Route path='/ingredients' element={<Ingredients token={token}/>} />

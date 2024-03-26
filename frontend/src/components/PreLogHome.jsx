@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function Home() {
+function PreLogHome() {
  
     return (
         <>
@@ -9,4 +9,4 @@ function Home() {
     );
 }
  
-export default Home;
+export default PreLogHome;

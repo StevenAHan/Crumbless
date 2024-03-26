@@ -5,6 +5,19 @@
     border-radius: 5px;
 }
 
+.fs-item-li {
+    margin: 5px;
+    padding: 5px;
+    background-color: #bebebe;
+    border-radius: 5px;
+}
+
+.dish-styles {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
 .fs-item h2 {
     margin: 0;
     font-size: 16px;
@@ -26,7 +39,7 @@
 }
 
 .cuisine {
-    background-color: #b6ffdb; /* Green */
+    background-color: #ff87eb; /* Purple */
 }
 
 .holiday {

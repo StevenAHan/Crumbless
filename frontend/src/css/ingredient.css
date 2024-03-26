@@ -12,6 +12,18 @@
     cursor: pointer;
 }
 
+.ingredients-item-li {
+    margin: 5px;
+    padding: 5px;
+    background-color: #bebebe;
+    border-radius: 5px;
+}
+
+.dish-ingredients {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .ingredients-item:hover {
     background-color: #e0e0e0;
 }
