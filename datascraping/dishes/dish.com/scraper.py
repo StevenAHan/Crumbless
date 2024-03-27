@@ -134,8 +134,13 @@ def foodcomScraper(url):
             servings = 1
     else:
         servings = 1
+    
+    # Get the image
+    div_tag = soup.find('div', class_='primary-image')
+    img_tag = div_tag.find('img')
+    image_url = img_tag['src']
 
-    return {"title": title, "ingredients": cleaned_ingredients, "instructions": instructions, "total_time": total_time, "servings": servings, "leftovers": leftovers, "styles": styles_in_food}
+    return {"title": title, "ingredients": cleaned_ingredients, "instructions": instructions, "total_time": total_time, "servings": servings, "leftovers": leftovers, "styles": styles_in_food, "image": image_url, "num_of_ingr": len(cleaned_ingredients)}
 
 def getLeftovers(links):
     leftovers = []
@@ -164,7 +169,7 @@ def main():
     with open('links.txt', 'r', encoding='utf-8') as file:
         html = file.read()
     links = html.splitlines()
-    # links = links[130:132]
+    # links = links[30:132]
     statements = []
     i = 1
     statements.append("DELETE FROM dish;")
@@ -181,7 +186,7 @@ def main():
         food['title'] = food['title'].replace('"', "'")
         foods.append(food["title"])
         food["instructions"] = food["instructions"].replace('"', "'")
-        statements.append(f'''INSERT INTO dish (dish_name, dish_description, serves, time_required, source) VALUES ("{food["title"]}", "{food["instructions"]}", {food["servings"]}, {food["total_time"]}, "{link}");''')
+        statements.append(f'''INSERT INTO dish (dish_name, dish_description, serves, time_required, source, dish_img, num_of_ingredients) VALUES ("{food["title"]}", "{food["instructions"]}", {food["servings"]}, {food["total_time"]}, "{link}", "{food["image"]}", {food["num_of_ingr"]});''')
         for ing in food["ingredients"]:
             statements.append(f'''INSERT INTO dish_ingredient (dish_id, ingredient_id) VALUES ((SELECT dish_id FROM dish WHERE dish_name LIKE "{food["title"]}" LIMIT 1), (SELECT ingredient_id FROM ingredient WHERE ingredient_name LIKE "{ing}" LIMIT 1));''')
         for style in food["styles"]:

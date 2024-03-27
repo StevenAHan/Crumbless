@@ -138,8 +138,6 @@ def create_ingredient():
     qType = request.form.get("qType", None)
     cBU = request.form.get("cBU", None)
 
-    print(name, description, qType, cBU)
-
     # check if ingredient already exists
     if(runStatement(f"SELECT * FROM ingredient WHERE ingredient_name = '{name}'").shape[0] > 0):
         return {"msg": "Ingredient already exists"}, 401
@@ -213,13 +211,34 @@ def get_food_styles():
     return food_styles.to_json(orient="records")
 
 @app.route("/get/dishes", methods=["GET", "POST"])
+@jwt_required()
 def get_dish():
     search = request.form.get("search", None)
+    user = get_jwt_identity()
     if(search and search != ""):
-        dishes = runStatement(f'''SELECT * FROM dish
-                            WHERE dish_name LIKE "%{search}%" LIMIT 100;''')
+        dishes = runStatement(f'''SELECT dish.*, COUNT(dish_ingredient.ingredient_id) AS ingredient_count,
+                                    COUNT(DISTINCT user_ingredient.ingredient_id) AS user_ingredient_count,
+                                    (COUNT(DISTINCT user_ingredient.ingredient_id) / COUNT(dish_ingredient.ingredient_id) * 100) AS user_ingredient_percentage
+                                FROM dish
+                                LEFT JOIN dish_ingredient ON dish.dish_id = dish_ingredient.dish_id
+                                LEFT JOIN user_ingredient ON dish_ingredient.ingredient_id = user_ingredient.ingredient_id
+                                LEFT JOIN user ON user_ingredient.user_id = user.user_id AND user.username = "{user}"
+                                WHERE dish_name LIKE "%{search}%"
+                                GROUP BY dish.dish_id, dish.dish_name
+                                ORDER BY user_ingredient_percentage DESC, ingredient_count DESC
+                                LIMIT 100;''')
     else:
-        dishes = runStatement('''SELECT * FROM dish LIMIT 100;''')
+        dishes = runStatement(f'''SELECT dish.*, COUNT(dish_ingredient.ingredient_id) AS ingredient_count,
+                                    COUNT(DISTINCT user_ingredient.ingredient_id) AS user_ingredient_count,
+                                    (COUNT(DISTINCT user_ingredient.ingredient_id) / COUNT(dish_ingredient.ingredient_id) * 100) AS user_ingredient_percentage
+                                FROM dish
+                                LEFT JOIN dish_ingredient ON dish.dish_id = dish_ingredient.dish_id
+                                LEFT JOIN user_ingredient ON dish_ingredient.ingredient_id = user_ingredient.ingredient_id
+                                LEFT JOIN user ON user_ingredient.user_id = user.user_id AND user.username = "{user}"
+                                GROUP BY dish.dish_id, dish.dish_name
+                                ORDER BY user_ingredient_percentage DESC, ingredient_count DESC
+                                LIMIT 100;''')
+
     dish_ingredients = []
     dish_styles = []
     for i in dishes.index:

@@ -6,6 +6,7 @@ function Dishes(props) {
     const [userIng, setUserIng] = useState([]);
     const [numOfResults, setNumOfResults] = useState(0);
     const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(true);
 
     function setupDish(data) {
         // setup dish info
@@ -16,9 +17,6 @@ function Dishes(props) {
             data["dish_styles"][i] = JSON.parse(data["dish_styles"][i]);
         }
         setNumOfResults(data["dishes"].length);
-        if(data["dishes"].length === 100) {
-            setNumOfResults("100+")
-        }
         for (let i = 0; i < data["dishes"].length; i++) {
             const dishInfo = {
                 dish_id: data["dishes"][i].dish_id,
@@ -32,16 +30,21 @@ function Dishes(props) {
 
             // Parse dish_description
             dishInfo.dish_description = dishInfo.dish_description.split("~");
-
+            let numOfUserIng = 0;
+            const numOfIng = dishInfo.dish_ingredients.length;
             // setup dish HTML
             const ingHTML = [];
             for (let j = 0; j < dishInfo.dish_ingredients.length; j++) {
                 const ing = dishInfo.dish_ingredients[j];
+                // if(userIng && userIng.names && userIng.names.includes(ing.ingredient_name)) {
+                //     numOfUserIng++;
+                // }
                 const ingHTMLItem = (
-                    <li key={ing.ingredient_id} className="ingredients-item-li">{ing.ingredient_name}</li>
+                    <li key={ing.ingredient_id} className={`ingredients-item-li ${userIng && userIng.names && userIng.names.includes(ing.ingredient_name) ? 'green': ""}`}>{ing.ingredient_name}</li>
                 );
                 ingHTML.push(ingHTMLItem);
             }
+            const percentageOfIng = Math.round((numOfUserIng / numOfIng) * 100);
 
             const styleHTML = [];
             for (let j = 0; j < dishInfo.dish_food_styles.length; j++) {
@@ -61,9 +64,6 @@ function Dishes(props) {
                 descHTML.push(descHTMLItem);
             }
 
-            // if(ingHTML.length === 0) {
-            //     return <></>
-            // }
             const dishHTML = (
                 <div key={dishInfo.dish_id} className="dish">
                     <h2>{dishInfo.dish_name}</h2>
@@ -93,6 +93,23 @@ function Dishes(props) {
         return dishesHTML;
     }
 
+    // only if logged in
+    useEffect(() => {
+        fetch("/api/get/useringredient", {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " + props.token,
+            },
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            // organize data by alphabetical order
+            const ingNames = data.map((data) => data.ingredient_name);
+            const ingId = data.map((data) => data.ingredient_id);
+            setUserIng({ids: ingId, names: ingNames});
+        });
+    }, []);
+
     useEffect(() => {
         const formData = new URLSearchParams();
         const data = {
@@ -103,12 +120,13 @@ function Dishes(props) {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
+                Authorization: "Bearer " + props.token,
             },
             body: formData
         }).then((res) => res.json()).then((data) => {
             setDishes(setupDish(data));
         });
-    }, [search]);
+    }, [search, userIng]);
  
     return (
         <>

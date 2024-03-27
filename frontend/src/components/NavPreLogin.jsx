@@ -12,7 +12,7 @@ function NavPreLogin() {
                 <li>
                     <a href="/">Home</a>
                 </li>
-                <li>
+                {/* <li>
                     <a href="/dishes">List of Dishes</a>
                 </li>
                 <li>
@@ -20,7 +20,7 @@ function NavPreLogin() {
                 </li>
                 <li>
                     <a href="/ingredients">List of Ingredients</a>
-                </li>
+                </li> */}
             </ul>
             
             <ul className="right-links">
