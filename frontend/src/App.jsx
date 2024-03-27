@@ -59,9 +59,7 @@ function App() {
           <Route path='/' exact element={<PreLogHome/>} />
           <Route path='/create/dish' element={<CreateDish/>} />
           <Route path='/create/ingredient' element={<CreateIngredient/>} />
-          <Route path='/ingredients' element={<Ingredients token={token}/>} />
           <Route path='/foodstyles' element={<FoodStyles/>} />
-          <Route path='/dishes' element={<Dishes token={token}/>} />
           {!token && token!=="" &&token!== undefined?  
             <>
               <Route path='/login' exact element={<Login setToken={setToken} />} />
@@ -70,6 +68,8 @@ function App() {
               <>
                   <Route path='/login' exact element={<LoggedLogin />} />
                   <Route path='/register' exact element={<LoggedLogin />} />
+                  <Route path='/dishes' element={<Dishes token={token}/>} />
+                  <Route path='/ingredients' element={<Ingredients token={token}/>} />
                   <Route exact path="/profile" element={<Profile token={token} setToken={setToken} removeToken={removeToken}/>}></Route>
               </>
             )}

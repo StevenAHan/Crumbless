@@ -216,27 +216,27 @@ def get_dish():
     search = request.form.get("search", None)
     user = get_jwt_identity()
     if(search and search != ""):
-        dishes = runStatement(f'''SELECT dish.*, COUNT(dish_ingredient.ingredient_id) AS ingredient_count,
+        dishes = runStatement(f'''SELECT dish.*,
                                     COUNT(DISTINCT user_ingredient.ingredient_id) AS user_ingredient_count,
-                                    (COUNT(DISTINCT user_ingredient.ingredient_id) / COUNT(dish_ingredient.ingredient_id) * 100) AS user_ingredient_percentage
+                                    (COUNT(DISTINCT user_ingredient.ingredient_id) / dish.num_of_ingredients) * 100 AS user_ingredient_percentage
                                 FROM dish
                                 LEFT JOIN dish_ingredient ON dish.dish_id = dish_ingredient.dish_id
                                 LEFT JOIN user_ingredient ON dish_ingredient.ingredient_id = user_ingredient.ingredient_id
                                 LEFT JOIN user ON user_ingredient.user_id = user.user_id AND user.username = "{user}"
                                 WHERE dish_name LIKE "%{search}%"
                                 GROUP BY dish.dish_id, dish.dish_name
-                                ORDER BY user_ingredient_percentage DESC, ingredient_count DESC
+                                ORDER BY user_ingredient_percentage DESC, dish.num_of_ingredients DESC
                                 LIMIT 100;''')
     else:
-        dishes = runStatement(f'''SELECT dish.*, COUNT(dish_ingredient.ingredient_id) AS ingredient_count,
+        dishes = runStatement(f'''SELECT dish.*,
                                     COUNT(DISTINCT user_ingredient.ingredient_id) AS user_ingredient_count,
-                                    (COUNT(DISTINCT user_ingredient.ingredient_id) / COUNT(dish_ingredient.ingredient_id) * 100) AS user_ingredient_percentage
+                                    (COUNT(DISTINCT user_ingredient.ingredient_id) / dish.num_of_ingredients) * 100 AS user_ingredient_percentage
                                 FROM dish
                                 LEFT JOIN dish_ingredient ON dish.dish_id = dish_ingredient.dish_id
                                 LEFT JOIN user_ingredient ON dish_ingredient.ingredient_id = user_ingredient.ingredient_id
                                 LEFT JOIN user ON user_ingredient.user_id = user.user_id AND user.username = "{user}"
                                 GROUP BY dish.dish_id, dish.dish_name
-                                ORDER BY user_ingredient_percentage DESC, ingredient_count DESC
+                                ORDER BY user_ingredient_percentage DESC, dish.num_of_ingredients DESC
                                 LIMIT 100;''')
 
     dish_ingredients = []
