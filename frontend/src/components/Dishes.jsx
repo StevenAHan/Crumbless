@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/dish.css";
 
 function Dishes(props) {
@@ -16,7 +16,13 @@ function Dishes(props) {
             data["dish_ingredients"][i] = JSON.parse(data["dish_ingredients"][i]);
             data["dish_styles"][i] = JSON.parse(data["dish_styles"][i]);
         }
-        setNumOfResults(data["dishes"].length);
+        setNumOfResults(() => {
+            if (data["dishes"].length >= 100) {
+                setNumOfResults("100+");
+            } else {
+                setNumOfResults(data["dishes"].length);
+            }
+        });
         for (let i = 0; i < data["dishes"].length; i++) {
             const dishInfo = {
                 dish_id: data["dishes"][i].dish_id,
@@ -25,7 +31,8 @@ function Dishes(props) {
                 dish_ingredients: data["dish_ingredients"][i],
                 dish_steps: data["dishes"][i].dish_steps,
                 dish_food_styles: data["dish_styles"][i],
-                dish_source: data["dishes"][i].source
+                dish_source: data["dishes"][i].source,
+                dish_image: data["dishes"][i].dish_img,
             };
 
             // Parse dish_description
@@ -44,8 +51,7 @@ function Dishes(props) {
                 );
                 ingHTML.push(ingHTMLItem);
             }
-            const percentageOfIng = Math.round((numOfUserIng / numOfIng) * 100);
-
+            
             const styleHTML = [];
             for (let j = 0; j < dishInfo.dish_food_styles.length; j++) {
                 const style = dishInfo.dish_food_styles[j];
@@ -67,6 +73,7 @@ function Dishes(props) {
             const dishHTML = (
                 <div key={dishInfo.dish_id} className="dish">
                     <h2>{dishInfo.dish_name}</h2>
+                    <img src={dishInfo.dish_image} alt={dishInfo.dish_name} />
                     <h3>Instructions</h3>
                     <div>
                         {descHTML}
@@ -93,7 +100,34 @@ function Dishes(props) {
         return dishesHTML;
     }
 
-    // only if logged in
+    // Fetch dishes data
+    useEffect(() => {
+        setLoading(true); // Set loading to true while fetching data
+        const formData = new URLSearchParams();
+        const data = {
+            search: search
+        }
+        Object.keys(data).forEach(key => formData.append(key, data[key]));
+        fetch("/api/get/dishes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                Authorization: "Bearer " + props.token,
+            },
+            body: formData
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            setDishes(setupDish(data));
+            setLoading(false); // Set loading to false when data is fetched
+        })
+        .catch((error) => {
+            console.error("Error fetching dishes:", error);
+            setLoading(false); // Set loading to false in case of error
+        });
+    }, [search, userIng]);
+
+    // Fetch user ingredients
     useEffect(() => {
         fetch("/api/get/useringredient", {
             method: "GET",
@@ -110,24 +144,6 @@ function Dishes(props) {
         });
     }, []);
 
-    useEffect(() => {
-        const formData = new URLSearchParams();
-        const data = {
-            search: search
-        }
-        Object.keys(data).forEach(key => formData.append(key, data[key]));
-        fetch("/api/get/dishes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                Authorization: "Bearer " + props.token,
-            },
-            body: formData
-        }).then((res) => res.json()).then((data) => {
-            setDishes(setupDish(data));
-        });
-    }, [search, userIng]);
- 
     return (
         <>
             <h1>Dishes</h1>
@@ -136,10 +152,16 @@ function Dishes(props) {
                 <input type="text" placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
             </div>
             <h2>Tailored to you:</h2>
-            <h3>{numOfResults} results:</h3>
-            <div className="dishes">
-                {dishes}
-            </div>
+            {loading ? ( // Show loading screen if loading is true
+                <div className="loading">Loading...</div>
+            ) : (
+                <>
+                    <h3>{numOfResults} results:</h3>
+                    <div className="dishes">
+                        {dishes}
+                    </div>
+                </>
+            )}
 
         </>
     );

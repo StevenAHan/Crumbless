@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useFetcher } from 'react-router-dom';
 
 import NavPreLogin from './components/NavPreLogin';
 import NavPostLogin from './components/NavPostLogin';
@@ -19,11 +19,14 @@ import Register from './components/Register';
 import Ingredients from './components/Ingredients';
 import FoodStyles from './components/FoodStyles';
 import Dishes from './components/Dishes';
+import Template from './components/Template';
 
 
 function App() {
   const { token, removeToken, setToken } = useToken();
   const [ userInfo, setUserInfo ] = useState({});
+
+  const toRedirect = ["/dishes", "/ingredients", "/profile"];
 
   useEffect(() => {
     if(token) {
@@ -42,6 +45,14 @@ function App() {
         });
     }
   },[]);
+
+  useEffect(() => {
+    if (!token) {
+        if (toRedirect.includes(window.location.pathname)) {
+            window.location.replace("/login");
+        }
+    }
+}, [token]);
     
 
   return (
@@ -64,6 +75,10 @@ function App() {
             <>
               <Route path='/login' exact element={<Login setToken={setToken} />} />
               <Route path='/register' exact element={<Register />} />
+              <Route exact path="/profile" element={<Template/>}/>
+              <Route exact path="/dishes" element={<Template/>}/>
+              <Route exact path="/ingredients" element={<Template/>}/>
+
             </> :(
               <>
                   <Route path='/login' exact element={<LoggedLogin />} />

@@ -54,3 +54,12 @@
 .btn:hover {
     background-color: #0056b3;
 }
+
+.loading {
+    font-size: 30px;
+    font-weight: bold;
+    color: #333; /* You can adjust the color */
+    text-align: center;
+    margin-top: 20px; /* Adjust the margin as needed */
+  }
+  

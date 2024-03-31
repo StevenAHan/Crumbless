@@ -252,5 +252,8 @@ def get_dish():
         dish_styles.append(styles.to_json(orient="records"))
     return {"dishes": dishes.to_json(orient="records"), "dish_ingredients": dish_ingredients, "dish_styles": dish_styles}
 
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
