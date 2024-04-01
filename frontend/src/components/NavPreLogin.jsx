@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "../css/navbar.css";
+import cookie from "../assets/cookie.svg"
 
 function NavPreLogin() {
 

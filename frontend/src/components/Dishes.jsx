@@ -108,7 +108,7 @@ function Dishes(props) {
             search: search
         }
         Object.keys(data).forEach(key => formData.append(key, data[key]));
-        fetch("/api/get/dishes", {
+        fetch("/api/get/dishes/personal", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -146,12 +146,11 @@ function Dishes(props) {
 
     return (
         <>
-            <h1>Dishes</h1>
+            <h1>Personalized Dishes</h1>
 
             <div className="search">
                 <input type="text" placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
             </div>
-            <h2>Tailored to you:</h2>
             {loading ? ( // Show loading screen if loading is true
                 <div className="loading">Loading...</div>
             ) : (
