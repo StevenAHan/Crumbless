@@ -68,27 +68,33 @@ function PreLogHome() {
 
             const dishHTML = (
                 <div key={dishInfo.dish_id} className="dish">
-                    <h2>{dishInfo.dish_name}</h2>
-                    <img src={dishInfo.dish_image} alt={dishInfo.dish_name} />
-                    <h3>Instructions</h3>
-                    <div>
-                        {descHTML}
+                    <h2 className="dish-title">{dishInfo.dish_name}</h2>
+                    <img src={dishInfo.dish_image} alt={dishInfo.dish_name} className="dish-img" />
+                    <div className="instructions-div">
+                        <h3>Instructions</h3>
+                        <div>
+                            {descHTML}
+                        </div>
                     </div>
-                    <h3>Ingredients</h3>
-                    <ul className="dish-ingredients">
-                        {ingHTML}
-                    </ul>
+                    <div className="ingredients-div">
+                        <h3 className="dish-subtitle">Ingredients</h3>
+                        <ul className="dish-ingredients">
+                            {ingHTML}
+                        </ul>
+                    </div>
 
                     {/* only activate food styles if styleHTML has more than 0 objects */}
                     {styleHTML.length > 0 ? <>
-                        <h3>Food Styles</h3>
-                    <ul className="dish-styles">
-                        {styleHTML}
-                    </ul>
+                    <div className="food-style-div">
+                        <h3 className="dish-subtitle">Food Styles</h3>
+                        <ul className="dish-styles">
+                            {styleHTML}
+                        </ul>
+                    </div>   
                     </> : ""
                     }
                     
-                    <a href={dishInfo.dish_source} className="btn">Check Source</a>
+                    <a href={dishInfo.dish_source} className="src-btn btn">Check Source</a>
                 </div>
             );
             dishesHTML.push(dishHTML);
