@@ -13,6 +13,17 @@ body {
 
 .logo h1 {
     margin: 0;
+    position: relative;
+    left: 50px;
+    display: inline-block;
+}
+
+.cookie-logo {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    left: 10px;
+    top: 15px;
 }
 
 ul {

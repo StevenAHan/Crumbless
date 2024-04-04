@@ -88,7 +88,7 @@ function Profile(props) {
 
                 <div className="fridge">
                     <h3>Your Fridge</h3>
-                    <ul>
+                    <ul className="dish-ingredients">
                         {fridgeItems}
                     </ul>
                 </div>

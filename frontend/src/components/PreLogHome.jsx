@@ -37,15 +37,20 @@ function PreLogHome() {
             dishInfo.dish_description = dishInfo.dish_description.split("~");
             // setup dish HTML
             const ingHTML = [];
-            for (let j = 0; j < dishInfo.dish_ingredients.length; j++) {
+            for (let j = 0; j < Math.min(dishInfo.dish_ingredients.length, 10); j++) {
                 const ing = dishInfo.dish_ingredients[j];
-                // if(userIng && userIng.names && userIng.names.includes(ing.ingredient_name)) {
-                //     numOfUserIng++;
-                // }
                 const ingHTMLItem = (
                     <li key={ing.ingredient_id} className={`ingredients-item-li`}>{ing.ingredient_name}</li>
                 );
-                ingHTML.push(ingHTMLItem);
+                if(j == 9 && dishInfo.dish_ingredients.length > 10) {
+                    const ingHTMLItem = (
+                        <li key={ing.ingredient_id} className={`ingredients-item-li`}>...</li>
+                    );
+                    ingHTML.push(ingHTMLItem);
+                    break;
+                } else {
+                    ingHTML.push(ingHTMLItem);
+                }
             }
             
             const styleHTML = [];
