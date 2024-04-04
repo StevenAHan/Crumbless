@@ -1,0 +1,42 @@
+.home-main-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 80vh;
+    background-color: #89634a;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.home-main-subtitle {
+    color: white;
+    position: relative;
+    top: -10vh;
+    font-size: 4em;
+    margin: 0;
+    z-index: 1;
+}
+
+.home-secondary-subtitle {
+    color: white;
+    font-size: 2em;
+    position: relative;
+    top: 0vh;
+    text-align: center;
+    max-width: 80vw;
+    margin: 0;
+    z-index: 1;
+    font-weight: 400;
+}
+
+.home-main-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 200%;
+    height: 200%;
+    background-image: url("../assets/website_pictures/mainbackground.avif");
+    opacity: 0.2;
+}

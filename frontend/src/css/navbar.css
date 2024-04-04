@@ -7,10 +7,6 @@ nav {
     padding: 1rem;
 }
 
-body {
-    background-color: #d4b783;
-}
-
 .logo h1 {
     margin: 0;
     position: relative;
@@ -23,7 +19,7 @@ body {
     width: 50px;
     position: absolute;
     left: 10px;
-    top: 15px;
+    top: 10px;
 }
 
 ul {

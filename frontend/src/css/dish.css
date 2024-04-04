@@ -14,7 +14,19 @@
     overflow: hidden;
     height: 400px;
     position: relative;
+    cursor: pointer;
+}
 
+@media only screen and (max-width: 1300px) {
+    .dish {
+        width: calc(33% - 10px);
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .dish {
+        width: calc(50% - 10px);
+    }
 }
 
 .dish-img {
@@ -85,7 +97,7 @@
     transform: translateX(-50%);
     top: 10px;
     z-index: 1;
-    background-color: #89634a;
+    background-color: rgba(137, 99, 74, 0.9);
     color: rgb(0, 0, 0);
     border-radius: 10px;
     padding: 5px;
@@ -108,16 +120,18 @@
     padding: 10px 20px;
     margin-top: 15px;
     background-color: #89634a;
-    color: #fff;
+    color: #000000;
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 
-/* 
+
 .btn:hover {
-    background-color: #503929;
-} */
+    background-color: #6b4932;
+    color: white;
+    transition: 0.3s ease;
+}
 
 .loading {
     font-size: 30px;

@@ -4,9 +4,9 @@
 }
 
 h1, h2, h3, h4, a, input {
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: 400;
-    font-style: normal;
+    font-family:"Inter", sans-serif;
+    font-weight: 700;
+    font-style: bold;
 }
 
 .logo-name {
@@ -15,4 +15,12 @@ h1, h2, h3, h4, a, input {
 
 p, ul, li {
     font-family: 'Roboto Mono', monospace;
+}
+
+body {
+    background-color: #d4b783;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
 }

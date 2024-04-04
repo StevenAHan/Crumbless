@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "../css/home.css";
 
 function PreLogHome() {
     const [dishes, setDishes] = useState([]);
@@ -131,9 +132,11 @@ function PreLogHome() {
  
     return (
         <>
-            <h1>Crumbless</h1>
-            <h4>Keeping your stomach full and your fridge empty. Find dishes you can cook depending on the ingredients you have available.</h4>
-            <h4>To get personalized recipes, please log in or create an account!</h4>
+            <div className="home-main-container">
+                <div className="home-main-image"></div>
+                <h1 className="home-main-subtitle">Keeping your stomach full and your fridge empty.</h1>
+                <h2 className="home-secondary-subtitle">Find dishes you can cook depending on the ingredients you have available. To get personalized recipes, please log in or create an account!</h2>
+            </div>
             <h2>Popular Dishes</h2>
             <div className="search">
                 <input type="text" placeholder="Search for dishes" onChange={(e) => setSearch(e.target.value)} />
