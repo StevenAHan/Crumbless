@@ -5,13 +5,21 @@ nav {
     /* color: #d4b783; */
     color: #89634a;
     padding: 1rem;
+    margin-bottom: 1vh;
+    margin-top: 1vh;
 }
 
-.logo h1 {
+.links a {
+    font-size: 1.2em;
+}
+
+.logo-name {
     margin: 0;
     position: relative;
     left: 50px;
     display: inline-block;
+    font-size: 1.5em;
+    color: #89634a;
 }
 
 .cookie-logo {

@@ -148,3 +148,8 @@
     z-index: 2;
     opacity: 0;
 }
+
+/* dish page */
+.dish-page-title {
+    color:black;
+}

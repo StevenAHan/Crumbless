@@ -7,32 +7,23 @@ function NavPreLogin() {
     return (
         <nav>
             <div className="logo">
-                <img src={cookie} alt="cookie" className="cookie-logo"/>
-                <h1 className="logo-name">Crumbless</h1>
+                <a href="/">
+                    <img src={cookie} alt="cookie" className="cookie-logo"/>
+                    <h1 className="logo-name">Crumbless</h1>
+                </a>
             </div>
-            <ul className="left-links">
-                <li>
-                    <a href="/">Home</a>
-                </li>
-                {/* <li>
-                    <a href="/dishes">List of Dishes</a>
-                </li>
-                <li>
-                    <a href="/foodstyles">List of Food Styles</a>
-                </li>
-                <li>
-                    <a href="/ingredients">List of Ingredients</a>
-                </li> */}
-            </ul>
-            
-            <ul className="right-links">
-                <li>
-                    <a href="/login">Login</a>
-                </li>
-                <li>
-                    <a href="/register">Register</a>
-                </li>
-            </ul>
+            <div className="links">
+                <ul className="left-links">
+                </ul>
+                <ul className="right-links">
+                    <li>
+                        <a href="/login">Login</a>
+                    </li>
+                    <li>
+                        <a href="/register">Register</a>
+                    </li>
+                </ul>
+            </div>
         </nav>
     );
 }

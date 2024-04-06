@@ -20,6 +20,7 @@ import Ingredients from './components/Ingredients';
 import FoodStyles from './components/FoodStyles';
 import Dishes from './components/Dishes';
 import Template from './components/Template';
+import Dish from './components/Dish';
 
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
           <Route path='/create/dish' element={<CreateDish/>} />
           <Route path='/create/ingredient' element={<CreateIngredient/>} />
           <Route path='/foodstyles' element={<FoodStyles/>} />
+          <Route path='/dish' element={<Dish token={token}/>} />
           {!token && token!=="" &&token!== undefined?  
             <>
               <Route path='/login' exact element={<Login setToken={setToken} />} />

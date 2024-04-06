@@ -272,6 +272,19 @@ def get_dish_general():
         dish_styles.append(styles.to_json(orient="records"))
     return {"dishes": dishes.to_json(orient="records"), "dish_ingredients": dish_ingredients, "dish_styles": dish_styles}
 
+@app.route("/get/dish/<dish>", methods=["GET"])
+def get_specific_dish(dish):
+    dish = runStatement(f"SELECT * FROM dish WHERE dish_id ={dish}")
+    if(dish.shape[0] == 0):
+        return jsonify({"msg": "Dish not found"}), 404
+    dish_ingredients = runStatement(f'''SELECT ingredient.ingredient_id, ingredient.ingredient_name FROM ingredient
+                                INNER JOIN dish_ingredient ON ingredient.ingredient_id = dish_ingredient.ingredient_id
+                                WHERE dish_ingredient.dish_id = {dish['dish_id'][0]}''')
+    dish_styles = runStatement(f'''SELECT food_style.style_id, food_style.style_name, food_style.style_category FROM food_style
+                                INNER JOIN dish_style ON food_style.style_id = dish_style.style_id
+                                WHERE dish_style.dish_id = {dish["dish_id"][0]}''')
+    return {"dish": dish.to_json(orient="records"), "dish_ingredients": dish_ingredients.to_json(orient="records"), "dish_styles": dish_styles.to_json(orient="records")}
+
 
 if __name__ == '__main__':
     app.run(debug=True)

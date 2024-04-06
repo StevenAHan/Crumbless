@@ -37,6 +37,6 @@
     top: 0;
     width: 200%;
     height: 200%;
-    background-image: url("../assets/website_pictures/mainbackground.avif");
+    /* background-image: url("../assets/website_pictures/mainbackground.avif"); */
     opacity: 0.2;
 }

@@ -73,7 +73,7 @@ function PreLogHome() {
             }
 
             const dishHTML = (
-                <div key={dishInfo.dish_id} className="dish">
+                <div key={dishInfo.dish_id} className="dish" onClick={() => window.location.replace(`/dish?id=${dishInfo.dish_id}`)}>
                     <h2 className="dish-title">{dishInfo.dish_name}</h2>
                     <img src={dishInfo.dish_image} alt={dishInfo.dish_name} className="dish-img" />
                     <div className="instructions-div">
