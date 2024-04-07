@@ -153,3 +153,125 @@
 .dish-page-title {
     color:black;
 }
+
+.dish-page-image {
+    position: relative;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 100%;
+}
+
+.dish-page-popout {
+    position: absolute;
+    top: 25vh;
+    right: 5vw;
+    width: 25%;
+    box-sizing: border-box;
+    border:#000000;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 5px rgb(0, 0, 0);
+    /* background-color: #89634a; */
+}
+
+.dish-page-popout h4 {
+    padding-left: 10px;
+}
+
+.dish-page-popout h4 {
+    font-size: 20px;
+    display: inline;
+    position: relative;
+}
+
+.dish-page-popout p {
+    font-size: 24px;
+    display: inline-block;
+    text-align: right;
+    position: relative;
+    right: 0;
+    padding: 0;
+    margin: 0;
+}
+.dish-page-popout br {
+    margin: 10px;
+}
+
+.dish-page-ingredients-container {
+    position: relative;
+    left: 5%;
+    border-radius: 20px;
+    border-style: solid;
+    padding: 10px;
+    border-width: 2px;
+    border-color: #89634a;
+    margin-top: 10vh;
+    width: 90%;
+}
+
+.green-box {
+    background-color: #00ff00;
+    width: 20px;
+    height: 20px;
+    border-style: solid;
+    border-width: 1px;
+    border: black;
+    display: inline-block;
+    position: relative;
+    top: 5px;
+}
+
+.ingr-key-p {
+    display: inline-block;
+    margin-left: 0px;
+}
+
+.ingr-key {
+    position: absolute;
+    top: 1vh;
+    right: 3vw;
+}
+
+.large {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.dish-desc-num {
+    font-family:"Inter", sans-serif;
+    font-size: 40px;
+    width: 3%;
+    font-weight: bold;
+    color: #89634a;
+    opacity: .5;
+    display: inline-block;
+    position: relative;
+    font-weight: 700;
+    line-height: 30px;
+    margin: 1vh;
+}
+
+.dish-desc-item {
+    font-size: 20px;
+    display: inline-block;
+    width: 90%;
+    padding-left: 1%;
+    margin: 1vh;
+}
+
+.dish-page-info {
+    position: relative;
+    width: 65%;
+    margin-top: 10vh;
+}
+
+.dish-page-instructions-container {
+    position: relative;
+    left: 3%;
+}
+
+.dish-page-instructions-container h1 {
+    left: 3%;
+}
