@@ -172,30 +172,39 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0px 0px 5px rgb(0, 0, 0);
-    /* background-color: #89634a; */
+    margin: 1vh;
 }
 
-.dish-page-popout h4 {
-    padding-left: 10px;
+.dish-page-popout div {
+    padding: 10px;
+    margin-top: 2vh;
+    margin-bottom: 5vh;
+    border-bottom: 1px solid #89634a;
+    width: 80%;
+    position: relative;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
 }
 
 .dish-page-popout h4 {
     font-size: 20px;
     display: inline;
-    position: relative;
+    padding-left: 10px;
+    opacity: .5;
+    font-weight: 700;
+    color:#6b4932;
+    margin: 0;
 }
 
 .dish-page-popout p {
     font-size: 24px;
     display: inline-block;
     text-align: right;
-    position: relative;
-    right: 0;
     padding: 0;
     margin: 0;
-}
-.dish-page-popout br {
-    margin: 10px;
 }
 
 .dish-page-ingredients-container {
@@ -208,6 +217,11 @@
     border-color: #89634a;
     margin-top: 10vh;
     width: 90%;
+}
+
+.dish-page-ingredients-container h2 {
+    position: relative;
+    left: 1vw;
 }
 
 .green-box {
@@ -224,7 +238,7 @@
 
 .ingr-key-p {
     display: inline-block;
-    margin-left: 0px;
+    margin-left: 10px;
 }
 
 .ingr-key {
@@ -274,4 +288,11 @@
 
 .dish-page-instructions-container h1 {
     left: 3%;
+}
+
+.dish-page-styles-container {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
 }

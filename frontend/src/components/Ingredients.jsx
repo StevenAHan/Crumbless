@@ -22,7 +22,6 @@ function Ingredients(props) {
         })
         .then((res) => res.json())
         .then((data) => {
-            data = data.sort((a, b) => a.ingredient_name.localeCompare(b.ingredient_name));
             setIngredients(data);
         });
         
@@ -100,7 +99,7 @@ function Ingredients(props) {
             key={ingredient.ingredient_id}
             onClick={() => handleIngredientClick(ingredient.ingredient_id)}
             >
-            <h2>{ingredient.ingredient_name}</h2>
+            <h2>{ingredient.ingredient_name} ({ingredient.dish_count})</h2>
           </div>
             ))}
         </div>

@@ -163,9 +163,9 @@ def get_user_info():
 def get_ingredients():
     search = request.form.get("search", None)
     if(search and search != ""):
-        ingredients = runStatement(f"SELECT * FROM ingredient WHERE ingredient_name LIKE '%{search}%'")
+        ingredients = runStatement(f"SELECT * FROM ingredient WHERE ingredient_name LIKE '%{search}%' ORDER BY dish_count DESC")
     else:
-        ingredients = runStatement("SELECT * FROM ingredient")
+        ingredients = runStatement("SELECT * FROM ingredient ORDER BY dish_count DESC")
     return ingredients.to_json(orient="records")
 
 @app.route("/get/useringredient")

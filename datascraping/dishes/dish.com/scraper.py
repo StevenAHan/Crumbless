@@ -52,9 +52,9 @@ def replace_with_berry(word):
 
 def time_to_minutes(time_str):
     # Split the string into hours and minutes parts
-    if("min" in time_str):
-        return 1
     if("mins" not in time_str):
+        if("min" in time_str):
+            return 1
         return int(re.search(r'\d+', time_str).group()) * 60
     parts = time_str.split('hr ')
     if(len(parts) == 1):

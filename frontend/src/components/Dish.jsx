@@ -58,6 +58,7 @@ function Dish(props) {
                 return instrHTML;
             });
         }
+        
     }, [dishInfo]);
 
     return (
@@ -66,18 +67,27 @@ function Dish(props) {
                 <div className="dish-page-title-container">
                     <h1 className="dish-page-title">{dishInfo.dish.dish_name}</h1>
                 </div>  
+                <ul className="dish-page-styles-container">
+                    {dishInfo.dish_styles && dishInfo.dish_styles.map((style) => (
+                        <li key={style.style_id} className={`fs-item-li large ${style.style_category.toLowerCase()}`}>{style.style_name}</li>
+                    ))}
+                </ul>
                 <div className="dish-page-container">
                     <div className="dish-page-popout">
                         <img src={dishInfo.dish.dish_img} alt={dishInfo.dish.dish_name} className="dish-page-image"/>
-                        <h4>Date Created:</h4>
-                        <p>{dishInfo.dish.creation_time}</p>
-                        <br />
-                        <h4>Serves:</h4>
-                        <p>{dishInfo.dish.serves}</p>
-                        <br />
-                        <h4>Prep Time:</h4>
-                        <p>{dishInfo.dish.time_required}</p>
-                        <br />
+                        <div>
+                            <h4>DATE CREATED</h4>
+                            <p>{dishInfo.dish.creation_time}</p>
+                        </div>
+                        <div>
+                            <h4>SERVES</h4>
+                            <p>{dishInfo.dish.serves}</p>
+                        </div>
+                        <div>
+                            <h4>PREP TIME</h4>
+                            {/* convert minutes into hours and minutes, labeled */}
+                            <p>{dishInfo.dish.time_required} minute(s)</p>
+                        </div>
                     </div>
                     <div className="dish-page-info">
                         <div className="dish-page-ingredients-container">
@@ -96,12 +106,6 @@ function Dish(props) {
                             <h2>Instructions</h2>
                             <p>{instrHTML}</p>
                         </div>
-                        <h2>Food Styles</h2>
-                        <ul>
-                            {dishInfo.dish_styles && dishInfo.dish_styles.map((style) => (
-                                <li key={style.style_id}>{style.style_name}</li>
-                            ))}
-                        </ul>
                         <a href={dishInfo.dish_source} className="src-btn btn">Check Source</a>
                     </div>
                 </div>

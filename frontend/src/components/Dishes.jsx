@@ -131,11 +131,10 @@ function Dishes(props) {
         .then((res) => res.json())
         .then((data) => {
             setDishes(setupDish(data));
-            setLoading(false); // Set loading to false when data is fetched
+            setLoading(false);
         })
         .catch((error) => {
-            console.error("Error fetching dishes:", error);
-            setLoading(false); // Set loading to false in case of error
+            setLoading(false);
         });
     }, [search, userIng]);
 
