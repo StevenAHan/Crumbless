@@ -166,7 +166,7 @@ function Dishes(props) {
                 <div className="loading">Loading...</div>
             ) : (
                 <>
-                    <h3>{numOfResults} results:</h3>
+                    <h3 className="num-of-results">{numOfResults} results:</h3>
                     <div className="dishes">
                         {dishes}
                     </div>

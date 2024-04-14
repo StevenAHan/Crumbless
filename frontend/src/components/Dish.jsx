@@ -18,9 +18,7 @@ function Dish(props) {
             data["dish_styles"] = JSON.parse(data["dish_styles"]);
             // Parse dish_description
             data.dish.dish_description = data.dish.dish_description.split("~");
-            console.log(data)
             data.dish.creation_time = new Date(data.dish.creation_time).toLocaleDateString('en-US');
-            console.log(data)
             setDishInfo(data);
         });
     }, [searchParams]);
@@ -69,7 +67,7 @@ function Dish(props) {
                 </div>  
                 <ul className="dish-page-styles-container">
                     {dishInfo.dish_styles && dishInfo.dish_styles.map((style) => (
-                        <li key={style.style_id} className={`fs-item-li large ${style.style_category.toLowerCase()}`}>{style.style_name}</li>
+                        <li key={style.style_id} className={`fs-item-li stylebutton ${style.style_category.toLowerCase()}`}>{style.style_name}</li>
                     ))}
                 </ul>
                 <div className="dish-page-container">
@@ -86,7 +84,7 @@ function Dish(props) {
                         <div>
                             <h4>PREP TIME</h4>
                             {/* convert minutes into hours and minutes, labeled */}
-                            <p>{dishInfo.dish.time_required} minute(s)</p>
+                            <p>{dishInfo.dish.time_required} minutes</p>
                         </div>
                     </div>
                     <div className="dish-page-info">

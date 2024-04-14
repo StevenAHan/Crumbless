@@ -1,0 +1,18 @@
+.footer-container {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-text {
+    width: 30%;
+    text-align: justify;
+}
+
+.left-footer-container {
+    position: relative;
+    left: 10%;
+}

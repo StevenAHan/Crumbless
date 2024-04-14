@@ -21,6 +21,7 @@ import FoodStyles from './components/FoodStyles';
 import Dishes from './components/Dishes';
 import Template from './components/Template';
 import Dish from './components/Dish';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -68,7 +69,7 @@ function App() {
       <BrowserRouter>
         {/* Default routes */}
         <Routes>
-          <Route path='/' exact element={<PreLogHome/>} />
+          <Route path='/' exact element={<PreLogHome token={token}/>} />
           <Route path='/create/dish' element={<CreateDish/>} />
           <Route path='/create/ingredient' element={<CreateIngredient/>} />
           <Route path='/foodstyles' element={<FoodStyles/>} />
@@ -93,6 +94,7 @@ function App() {
           <Route path="/*" element={<ErrorPage/>} />
         </Routes>
       </BrowserRouter>
+      <Footer/>
     </>
   )
 }

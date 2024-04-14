@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import "../css/home.css";
 
-function PreLogHome() {
+function PreLogHome(props) {
     const [dishes, setDishes] = useState([]);
     const [search, setSearch] = useState("");
     const [numOfResults, setNumOfResults] = useState(0);
+    const [userIng, setUserIng] = useState([]);
 
 
     function setupDish(data) {
@@ -41,7 +42,7 @@ function PreLogHome() {
             for (let j = 0; j < Math.min(dishInfo.dish_ingredients.length, 10); j++) {
                 const ing = dishInfo.dish_ingredients[j];
                 const ingHTMLItem = (
-                    <li key={ing.ingredient_id} className={`ingredients-item-li`}>{ing.ingredient_name}</li>
+                    <li key={ing.ingredient_id} className={`ingredients-item-li ${userIng && userIng.names && userIng.names.includes(ing.ingredient_name) ? 'green': ""}`}>{ing.ingredient_name}</li>
                 );
                 if(j == 9 && dishInfo.dish_ingredients.length > 10) {
                     const ingHTMLItem = (
@@ -128,7 +129,26 @@ function PreLogHome() {
         .catch((error) => {
             console.error("Error fetching dishes:", error);
         });
-    }, [search]);
+    }, [search, userIng]);
+
+    useEffect(() => {
+        // Check to see if user is logged in
+        if(props.token && props.token !== "") {
+            fetch("/api/get/useringredient", {
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + props.token,
+                },
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                // organize data by alphabetical order
+                const ingNames = data.map((data) => data.ingredient_name);
+                const ingId = data.map((data) => data.ingredient_id);
+                setUserIng({ids: ingId, names: ingNames});
+            });
+        }
+    }, [props.token]);
  
     return (
         <>
@@ -141,7 +161,12 @@ function PreLogHome() {
             <div className="search">
                 <input type="text" placeholder="Search for dishes" onChange={(e) => setSearch(e.target.value)} />
             </div>
-            <h3>{numOfResults} Results</h3>
+            <div className="num-results-container">
+                <h3 className="num-of-results">{numOfResults} Results</h3>
+                <div className="search-legend">
+                    <p className="legend-item">Green ingredients are the ones you have. Click on a dish to see more details</p>
+                </div>
+            </div>
             <div className="dishes">
                 {dishes}
             </div>
