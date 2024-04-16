@@ -157,22 +157,23 @@ function Dishes(props) {
 
     return (
         <>
-            <h1>Personalized Dishes</h1>
+            <div className="dishes-container">
+                <h1>Personalized Dishes</h1>
 
-            <div className="search">
-                <input type="text" placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
+                <div className="search">
+                    <input type="text" placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
+                </div>
+                {loading ? ( // Show loading screen if loading is true
+                    <div className="loading">Loading...</div>
+                ) : (
+                    <>
+                        <h3 className="num-of-results">{numOfResults} results:</h3>
+                        <div className="dishes">
+                            {dishes}
+                        </div>
+                    </>
+                )}
             </div>
-            {loading ? ( // Show loading screen if loading is true
-                <div className="loading">Loading...</div>
-            ) : (
-                <>
-                    <h3 className="num-of-results">{numOfResults} results:</h3>
-                    <div className="dishes">
-                        {dishes}
-                    </div>
-                </>
-            )}
-
         </>
     );
 }

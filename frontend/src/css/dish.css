@@ -308,6 +308,7 @@
     position: relative;
     width: 65%;
     margin-top: 10vh;
+    min-height: 80vh;
 }
 
 .dish-page-instructions-container {

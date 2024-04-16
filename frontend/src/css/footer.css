@@ -2,7 +2,7 @@
     background-color: #333;
     color: white;
     padding: 20px;
-    position: relative;
+    position: absolute;
     bottom: 0;
     width: 100%;
 }
@@ -12,7 +12,17 @@
     text-align: justify;
 }
 
-.left-footer-container {
+.footer-top {
     position: relative;
-    left: 10%;
+    padding: 5vh;
+}
+
+.left-footer-container {
+
+}
+
+.copyright-container {
+    text-align: center;
+    /* border-top:#000000;
+    border-radius: 1px; */
 }

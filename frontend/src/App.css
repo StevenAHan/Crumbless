@@ -24,3 +24,21 @@ body {
     height: 100%;
     overflow-x: hidden;
 }
+
+body::-webkit-scrollbar {
+    width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+    background: #d4b783;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #89634a;
+    border-radius: 10px;
+}
+
+.big-container {
+    position: relative;
+    min-height: 100vh;
+}

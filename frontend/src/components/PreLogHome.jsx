@@ -157,6 +157,9 @@ function PreLogHome(props) {
                 <h1 className="home-main-subtitle">Keeping your stomach full and your fridge empty.</h1>
                 <h2 className="home-secondary-subtitle">Find dishes you can cook depending on the ingredients you have available. To get personalized recipes, please log in or create an account!</h2>
             </div>
+            <div className="collaboration-container">
+                <h3>In colaboration with:</h3>
+            </div>
             <h2>Popular Dishes</h2>
             <div className="search">
                 <input type="text" placeholder="Search for dishes" onChange={(e) => setSearch(e.target.value)} />

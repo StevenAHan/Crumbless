@@ -59,7 +59,8 @@ function App() {
 
   return (
     <>
-      {!token && token!=="" &&token!== undefined ? <>
+    <div className="big-container">
+    {!token && token!=="" &&token!== undefined ? <>
         <NavPreLogin />
       </> : 
       <>
@@ -95,6 +96,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <Footer/>
+    </div>
     </>
   )
 }
