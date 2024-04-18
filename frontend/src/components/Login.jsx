@@ -51,12 +51,14 @@ function Login(props) {
       <div className='register-container'>
         <h1>Login</h1>
           <form className="register-form">
+            <label>Username:</label>
             <input onChange={handleChange} 
                   type="username"
                   text={loginForm.username} 
                   name="username" 
                   placeholder="Username" 
                   value={loginForm.username} />
+            <label>Password:</label>
             <input onChange={handleChange} 
                   type="password"
                   text={loginForm.password} 

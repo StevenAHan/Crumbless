@@ -1,71 +1,90 @@
-/* profile.css */
-
 .profile-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center items horizontally */
-  }
+  position: absolute;
+  width: 40%;
+  right: 5vw;
+  top: 20vh;
+  margin: 0 auto;
+  padding: 20px;
+  /* border: 1px solid #000000; */
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.logout-btn {
+  background-color: #89634a;
+  color: white;
+}
   
-  .profile-picture {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 20px;
-  }
-  
-  .profile-info {
-    margin-bottom: 10px;
-  }
-  
-  .profile-info p {
-    margin: 5px 0;
-  }
-  
-  .logout-btn {
-    background-color: #f44336;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px; /* Add margin to separate from profile information */
-  }
-  
-  .logout-btn:hover {
-    background-color: #d32f2f;
-  }
-  
-  .fridge {
-    margin-top: 20px; /* Adjust spacing as needed */
-  }
-  
-  .fridge h3 {
-    font-size: 1.5em; /* Example font size */
-    margin-bottom: 10px; /* Adjust spacing as needed */
-  }
-  
-  .fridge ul {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0; /* Remove default padding */
-  }
-  
-  .fridge ul li {
-    width: calc(33.33% - 30px);
-    margin: 5px;
-    padding: 5px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-  }
-  
-  .fridge ul li h2 {
-    margin: 0;
-    font-size: 18px;
-    color: #333;
-  }
+.logout-btn:hover {
+  background-color: #000000;
+}
+
+.profile-btn {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.fridge {
+  position: absolute;
+  width: 40%;
+  left: 0;
+  top: 20vh;
+  box-sizing: border-box;
+  border:#000000;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 1vh;
+  padding: 2vh;
+  text-align: center;
+  border-style: solid;
+  border-width: 1px;
+  /* background-color: white; */
+}
+
+.fridge h3 {
+  font-size: 1.5em; /* Example font size */
+  margin-bottom: 10px; /* Adjust spacing as needed */
+}
+
+.fridge ul {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0; /* Remove default padding */
+}
+
+.fridge ul li {
+  width: calc(33.33% - 30px);
+  margin: 5px;
+  padding: 5px;
+  background-color: #89634a;
+  border-radius: 5px;
+  color: white;
+}
+
+.fridge ul li h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+button { 
+  background-color: #89634a;
+  color: white;
+  padding: .5em;
+  font-weight: 600;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 2vh;
+}
+
+button:hover {
+  background-color: #000000;
+  transition: .3s ease;
+}

@@ -34,6 +34,10 @@ function Profile(props) {
         });
     }
 
+    function openFridge() {
+
+    }
+
     useEffect(() => {
         fetch('/api/profile', {
             method: 'GET',
@@ -66,9 +70,15 @@ function Profile(props) {
 
     useEffect(() => {
         let items = [];
-        fridge.forEach((item) => {
-            items.push(<li>{item.ingredient_name}</li>);
-        });
+        let i = 0;
+        for (let item of fridge) {
+            items.push(<li key={i}>{item.ingredient_name}</li>);
+            i++;
+            if(i > 22) {
+                items.push(<li key={i}>...</li>);
+                break;
+            }
+        }
         setFridgeItems(items);
     }, [fridge]);
     
@@ -79,23 +89,26 @@ function Profile(props) {
 
         </> :
         <>
+            <h1>Hello, {userInfo.first_name} ({userInfo.username})</h1>
             <div className="profile-container">
-                <h1>Hello, {userInfo.first_name} ({userInfo.username})</h1>
-                <img src={defaultPic} alt="whoops" className="profile-picture"/>
+                {/* <img src={defaultPic} alt="whoops" className="profile-picture"/> */}
                 <div className="profile-info"> 
 
                 </div>
 
-                <div className="fridge">
-                    <h3>Your Fridge</h3>
-                    <ul className="dish-ingredients">
-                        {fridgeItems}
-                    </ul>
-                </div>
-
-                <button onClick={logMeOut} className="logout-btn"> 
+                <button onClick={logMeOut} className="profile-btn logout-btn"> 
                     Logout
                 </button>
+            </div>
+
+            <div className="fridge">
+                <h3>Your Fridge</h3>
+                <ul className="dish-ingredients">
+                    {fridgeItems}
+                </ul>
+                {fridge.length >= 27 ?                 
+                    <button onClick={openFridge}>Check Full Fridge</button> 
+                    : ""}
             </div>
         </>
         }

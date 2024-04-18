@@ -158,6 +158,7 @@
     color: #333; /* You can adjust the color */
     text-align: center;
     margin-top: 20px; /* Adjust the margin as needed */
+    margin-bottom: 5vh;
 }
 
 .src-btn {
@@ -309,6 +310,7 @@
     width: 65%;
     margin-top: 10vh;
     min-height: 80vh;
+    margin-bottom: 10vh;
 }
 
 .dish-page-instructions-container {

@@ -6,6 +6,7 @@ function PreLogHome(props) {
     const [search, setSearch] = useState("");
     const [numOfResults, setNumOfResults] = useState(0);
     const [userIng, setUserIng] = useState([]);
+    const [loading, setLoading] = useState(true);
 
 
     function setupDish(data) {
@@ -115,6 +116,7 @@ function PreLogHome(props) {
             search: search
         }
         Object.keys(data).forEach(key => formData.append(key, data[key]));
+        setLoading(true);
         fetch("/api/get/dishes/general", {
             method: "POST",
             headers: {
@@ -125,9 +127,11 @@ function PreLogHome(props) {
         .then((res) => res.json())
         .then((data) => {
             setDishes(setupDish(data));
+            setLoading(false); 
         })
         .catch((error) => {
             console.error("Error fetching dishes:", error);
+            setLoading(false);
         });
     }, [search, userIng]);
 
@@ -155,21 +159,28 @@ function PreLogHome(props) {
             <div className="home-main-container">
                 <div className="home-main-image"></div>
                 <h1 className="home-main-subtitle">Keeping your stomach full and your fridge empty.</h1>
-                <h2 className="home-secondary-subtitle">Find dishes you can cook depending on the ingredients you have available. To get personalized recipes, please log in or create an account!</h2>
+                {props.token && props.token !== "" ? (
+                    <h2 className="home-secondary-subtitle">Find dishes you can cook depending on the ingredients you have available. To get personalized recipes, please log in or create an account!</h2>
+                ) : (
+                    <h2 className="home-secondary-subtitle">Find dishes you can cook depending on the ingredients you have available. Set your fridge using the ingredients tab, and get your personalized results.</h2>
+                )}
             </div>
-            <div className="collaboration-container">
+            {/* <div className="collaboration-container">
                 <h3>In colaboration with:</h3>
-            </div>
-            <h2>Popular Dishes</h2>
+            </div> */}
+            <h2 className="pop-dishes">Popular Dishes</h2>
             <div className="search">
                 <input type="text" placeholder="Search for dishes" onChange={(e) => setSearch(e.target.value)} />
             </div>
+            {loading ? ( // Conditionally render loading screen
+                <div className="loading">Loading...</div>
+            ) : (
             <div className="num-results-container">
                 <h3 className="num-of-results">{numOfResults} Results</h3>
                 <div className="search-legend">
                     <p className="legend-item">Green ingredients are the ones you have. Click on a dish to see more details</p>
                 </div>
-            </div>
+            </div> )}
             <div className="dishes">
                 {dishes}
             </div>

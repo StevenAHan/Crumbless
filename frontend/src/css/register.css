@@ -1,9 +1,10 @@
 .register-container {
     max-width: 400px;
     margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 50px;
+    padding-top: 20px;
+    border: 1px solid #000000;
+    border-radius: 15px;
 }
 
 .register-container h1 {
@@ -28,12 +29,18 @@
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
+    background-color: #89634a;
     color: #fff;
     font-size: 16px;
     cursor: pointer;
 }
 
+.register-form label {
+    font-size: 18px;
+    font-weight: 600;
+}
+
 .register-form button:hover {
-    background-color: #0056b3;
+    background-color: rgb(0, 0, 0);
+
 }

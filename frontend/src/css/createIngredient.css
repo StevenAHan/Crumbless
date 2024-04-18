@@ -32,34 +32,5 @@
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-
-  }
-  
-  button[type="submit"] {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #45a049;
-  }
-  
-  button {
-    background-color: #f44336;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  button:hover {
-    background-color: #d32f2f;
   }
   

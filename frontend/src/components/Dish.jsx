@@ -56,6 +56,7 @@ function Dish(props) {
                 return instrHTML;
             });
         }
+        console.log(dishInfo)
         
     }, [dishInfo]);
 
@@ -73,6 +74,10 @@ function Dish(props) {
                 <div className="dish-page-container">
                     <div className="dish-page-popout">
                         <img src={dishInfo.dish.dish_img} alt={dishInfo.dish.dish_name} className="dish-page-image"/>
+                        {/* <div className="ratings">
+                            <h4>RATINGS</h4>
+                            <p>{dishInfo.dish.rating}</p>
+                        </div> */}
                         <div>
                             <h4>DATE CREATED</h4>
                             <p>{dishInfo.dish.creation_time}</p>

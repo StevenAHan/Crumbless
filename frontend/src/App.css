@@ -40,5 +40,5 @@ body::-webkit-scrollbar-thumb {
 
 .big-container {
     position: relative;
-    min-height: 100vh;
+    min-height: 99vh;
 }

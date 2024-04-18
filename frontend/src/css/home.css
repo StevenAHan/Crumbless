@@ -50,3 +50,9 @@
     /* background-image: url("../assets/website_pictures/mainbackground.avif"); */
     opacity: 0.2;
 }
+
+.pop-dishes {
+    position: relative;
+    left: 1vw;
+    width: 100%;
+}
