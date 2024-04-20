@@ -91,10 +91,17 @@ function Profile(props) {
         <>
             <h1>Hello, {userInfo.first_name} ({userInfo.username})</h1>
             <div className="profile-container">
-                {/* <img src={defaultPic} alt="whoops" className="profile-picture"/> */}
+                {/* <img src={defaultPic} alt="whoops" className="profile-picture"/>
                 <div className="profile-info"> 
 
-                </div>
+                </div> */}
+                <button className="profile-btn"> 
+                    My Account Information
+                </button>
+
+                <button className="profile-btn"> 
+                    Edit Food Preferences
+                </button>
 
                 <button onClick={logMeOut} className="profile-btn logout-btn"> 
                     Logout
@@ -106,6 +113,11 @@ function Profile(props) {
                 <ul className="dish-ingredients">
                     {fridgeItems}
                 </ul>
+
+                {fridge.length === 0 ?
+                    <p className="empty-msg">Your fridge is empty. Click the ingredients tab to add your ingredients.</p>
+                    : ""    }
+
                 {fridge.length >= 27 ?                 
                     <button onClick={openFridge}>Check Full Fridge</button> 
                     : ""}

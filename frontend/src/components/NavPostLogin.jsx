@@ -15,13 +15,10 @@ function NavPostLogin() {
             </div>
                 <ul className="left-links">
                     <li>
+                        <a href="/ingredients">Select Ingredients</a>
+                    </li>
+                    <li>
                         <a href="/dishes">Personalized Dishes</a>
-                    </li>
-                    <li>
-                        <a href="/foodstyles">List of Food Styles</a>
-                    </li>
-                    <li>
-                        <a href="/ingredients">List of Ingredients</a>
                     </li>
                 </ul>
                 

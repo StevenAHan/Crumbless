@@ -78,6 +78,9 @@ function Dish(props) {
                             <h4>RATINGS</h4>
                             <p>{dishInfo.dish.rating}</p>
                         </div> */}
+                        <div className="source-btn-container">
+                            <a href={dishInfo.dish.source} className="source-btn btn" target="_blank" rel="noopener noreferrer">Check Source</a>
+                        </div>
                         <div>
                             <h4>DATE CREATED</h4>
                             <p>{dishInfo.dish.creation_time}</p>

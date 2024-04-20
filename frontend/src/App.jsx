@@ -22,6 +22,7 @@ import Dishes from './components/Dishes';
 import Template from './components/Template';
 import Dish from './components/Dish';
 import Footer from './components/Footer';
+import CombinedDishes from './components/CombinedDishes';
 
 
 function App() {
@@ -82,13 +83,13 @@ function App() {
               <Route exact path="/profile" element={<Template/>}/>
               <Route exact path="/dishes" element={<Template/>}/>
               <Route exact path="/ingredients" element={<Template/>}/>
-
             </> :(
               <>
                   <Route path='/login' exact element={<LoggedLogin />} />
                   <Route path='/register' exact element={<LoggedLogin />} />
                   <Route path='/dishes' element={<Dishes token={token}/>} />
                   <Route path='/ingredients' element={<Ingredients token={token}/>} />
+                  <Route path='/test' element={<CombinedDishes token={token}/>} />
                   <Route exact path="/profile" element={<Profile token={token} setToken={setToken} removeToken={removeToken}/>}></Route>
               </>
             )}

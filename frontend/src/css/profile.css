@@ -24,8 +24,11 @@
 
 .profile-btn {
   position: relative;
-  display: block;
+  display: inline-block;
   width: 100%;
+  height: 15%;
+  margin-bottom: 12vh;
+  z-index: 1;
 }
 
 .fridge {
@@ -34,7 +37,7 @@
   left: 0;
   top: 20vh;
   box-sizing: border-box;
-  border:#000000;
+  border:#89634a;
   border-radius: 10px;
   overflow: hidden;
   margin: 1vh;
@@ -87,4 +90,10 @@ button {
 button:hover {
   background-color: #000000;
   transition: .3s ease;
+}
+
+.empty-msg {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: #89634a;
 }

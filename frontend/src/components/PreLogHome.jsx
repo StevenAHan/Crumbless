@@ -102,7 +102,7 @@ function PreLogHome(props) {
                     </> : ""
                     }
                     
-                    <a href={dishInfo.dish_source} className="src-btn btn">Check Source</a>
+                    <a href={dishInfo.dish_source} className="src-btn btn" target="_blank" rel="noopener noreferrer">Check Source</a>
                 </div>
             );
             dishesHTML.push(dishHTML);

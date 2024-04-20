@@ -10,6 +10,7 @@
     background-color: #f0f0f0;
     border-radius: 5px;
     cursor: pointer;
+    position: relative;
 }
 
 .ingredients-item-li {
@@ -40,4 +41,33 @@
 
 .green:hover {
     background-color: #00dd00;
+}
+
+.ingredients-item * {
+    display: inline;
+  }
+  
+.ingredients-item h4 {
+    position: absolute;
+    right: .5vw;
+    top: -1vh;
+    color: gray;
+    opacity: .5;
+}
+
+.showmore-btn {
+    position: relative;
+    display: inline-block;
+    width: 15%;
+    font-size: 20px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    background-color: #89634a;
+    margin-bottom: 5vh;
+    text-align: center;
+}
+
+.ingredients-desc {
+    text-align: center;
 }
