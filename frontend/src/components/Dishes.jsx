@@ -7,6 +7,51 @@ function Dishes(props) {
     const [numOfResults, setNumOfResults] = useState(0);
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
+    const [ingredients, setIngredients] = useState([]);
+    const [showMoreCount, setShowMoreCount] = useState(30);
+    const [switchie, setSwitchie] = useState(false);
+    const [ingSearch, setIngSearch] = useState("");
+    const [showIngredients, setShowIngredients] = useState(false);
+
+    const handleIngredientClick = (ingredientId) => {
+        const formData = new URLSearchParams();
+        if (userIng.ids.includes(ingredientId)) {
+          const data = {
+            ingredient_id: ingredientId
+          };
+          Object.keys(data).forEach((key) => formData.append(key, data[key]));
+          fetch(`/api/delete/useringredient`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Authorization: "Bearer " + props.token
+            },
+            body: formData
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              setSwitchie(!switchie);
+            });
+        } else {
+          const data = {
+            ingredient_id: ingredientId,
+            quantity: 1
+          };
+          Object.keys(data).forEach((key) => formData.append(key, data[key]));
+          fetch(`/api/add/useringredient`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Authorization: "Bearer " + props.token
+            },
+            body: formData
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              setSwitchie(!switchie);
+            });
+        }
+    };
 
     function setupDish(data) {
         // setup dish info
@@ -80,12 +125,12 @@ function Dishes(props) {
                 <div key={dishInfo.dish_id} className="dish" onClick={() => window.location.replace(`/dish?id=${dishInfo.dish_id}`)}>
                     <h2 className="dish-title">{dishInfo.dish_name}</h2>
                     <img src={dishInfo.dish_image} alt={dishInfo.dish_name} className="dish-img" />
-                    <div className="instructions-div">
+                    {/* <div className="instructions-div">
                         <h3>Instructions</h3>
                         <div>
                             {descHTML}
                         </div>
-                    </div>
+                    </div> */}
                     <div className="ingredients-div">
                         <h3 className="dish-subtitle">Ingredients</h3>
                         <ul className="dish-ingredients">
@@ -153,21 +198,86 @@ function Dishes(props) {
             const ingId = data.map((data) => data.ingredient_id);
             setUserIng({ids: ingId, names: ingNames});
         });
-    }, []);
+    }, [switchie]);
 
+    useEffect(() => {
+        const formData = new URLSearchParams();
+        const data = {
+          search: ingSearch
+        };
+        Object.keys(data).forEach((key) => formData.append(key, data[key]));
+        fetch("/api/get/ingredients", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: formData
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setIngredients(data);
+          });
+      }, [ingSearch]);
 
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === "`" || event.key === "~") {
+                setShowIngredients(!showIngredients);
+            }
+        };
 
+        document.addEventListener("keydown", handleKeyDown);
 
-    return (
-        <>
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [showIngredients]); 
+
+      return (
+        <div className="dishes-page-container">
+            {/* Button to toggle visibility of ingredient container */}
+            {/* <button onClick={() => setShowIngredients(!showIngredients)} className="ing-button">
+                {showIngredients ? "Hide Ingredients" : "Show Ingredients"}
+            </button> */}
+
+            {/* Ingredients container */}
+            {true && (
+                <div className={`dish-ingredients-container ${showIngredients ? "disable" : ""}`}>
+                    <h1>Ingredients</h1>
+                    <p className="ingredients-desc">
+                        Select the ingredients you have. The ingredients you currently have are
+                        highlighted in green. (We assume you have water, salt, and pepper)
+                    </p>
+                    <div className="search-container">
+                        <input
+                            type="text"
+                            placeholder="Search for ingredients"
+                            onChange={(e) => setIngSearch(e.target.value)}
+                        />
+                    </div>
+                    <div className="dish-ing-ing-container">
+                        {ingredients.slice(0, showMoreCount).map((ingredient) => (
+                            <div
+                                className={`ingredients-item ${
+                                    userIng.names.includes(ingredient.ingredient_name) ? "green" : ""
+                                } dishes-ing-item`}
+                                key={ingredient.ingredient_id}
+                                onClick={() => handleIngredientClick(ingredient.ingredient_id)}
+                            >
+                                <h2>{ingredient.ingredient_name}</h2>
+                                <h4>{ingredient.dish_count}</h4>
+                            </div>
+                        ))}
+                    </div>
+                    <a href="/ingredients" className="showmore-btn ing-btn">See All Ingredients</a>
+                </div>
+            )}
+
             <div className="dishes-container">
                 <h1>Personalized Dishes</h1>
 
                 <div className="search">
                     <input type="text" placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
-                    <div className="filters">
-                        <input type="radio" />
-                    </div>
                 </div>
                 {loading ? ( // Show loading screen if loading is true
                     <div className="loading">Loading...</div>
@@ -176,7 +286,7 @@ function Dishes(props) {
                         <div className="num-results-container">
                             <h3 className="num-of-results">{numOfResults} Results</h3>
                             <div className="search-legend">
-                                <p className="legend-item">Green ingredients are the ones you have. Click on a dish to see more details</p>
+                                <p className="legend-item">Green ingredients are the ones you have. Click on a dish to see more details. To see your ingredients and possibly add more, press `.</p>
                             </div>
                         </div>
                         <div className="dishes">
@@ -185,8 +295,8 @@ function Dishes(props) {
                     </>
                 )}
             </div>
-        </>
+        </div>
     );
 }
- 
+
 export default Dishes;

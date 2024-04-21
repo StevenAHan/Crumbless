@@ -8,6 +8,20 @@
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
 }
+/* 
+.dishes-container {
+    position: relative;
+    width: 50%;
+    top: 0;
+    border-style: solid;
+    border-width: 1px;
+    left: 7%;
+} */
+
+/* .dishes-page-container {
+    display: flex;
+    flex-wrap: wrap;
+} */
 
 .dish {
     width: calc(25% - 10px);
@@ -27,12 +41,20 @@
     font-weight: 500;
 }
 
+
+.dishes-ing-item {
+    width: calc(33% - 20px);
+}
+
 @media only screen and (max-width: 1300px) {
     .dish {
         width: calc(33% - 10px);
     }
     .legend-item {
         display: none;
+    }
+    .dishes-ing-item {
+        width: calc(50% - 20px);
     }
 }
 
@@ -178,6 +200,78 @@
 .num-results-container {
     position: relative;
 }
+@keyframes slideIn {
+    from {
+        opacity: 1;
+        transform: translateX(-45vw);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50vw);
+    }
+}
+
+
+.dish-ingredients-container {
+    position: fixed;
+    width: 40%;
+    left: 0%;
+    top: 0;
+    min-height: 100vh;
+    z-index: 1;
+    background-color: #89634a;
+    color: white;
+    padding: 2vh;
+
+    animation-duration: .75s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+    animation-name: slideIn;
+}
+
+.disable {
+    animation-name: slideOut;
+    animation-duration: .75s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+}
+
+.slide-In {
+    animation-name: slideIn;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+}
+
+.dish-ing-ing-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ing-button {
+    position: fixed;
+    left: 5%;
+    top: 11%;
+    z-index: 2;
+}
+
+.ing-btn {
+    width: 60%;
+    margin-top:2vh;
+    color: white;
+}
+
 
 /* dish page */
 .dish-page-title {
