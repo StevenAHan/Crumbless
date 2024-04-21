@@ -12,6 +12,7 @@ function Dishes(props) {
     const [switchie, setSwitchie] = useState(false);
     const [ingSearch, setIngSearch] = useState("");
     const [showIngredients, setShowIngredients] = useState(false);
+    const [initial, setInitial] = useState(false);
 
     const handleIngredientClick = (ingredientId) => {
         const formData = new URLSearchParams();
@@ -223,6 +224,7 @@ function Dishes(props) {
         const handleKeyDown = (event) => {
             if (event.key === "`" || event.key === "~") {
                 setShowIngredients(!showIngredients);
+                setInitial(true);
             }
         };
 
@@ -241,8 +243,8 @@ function Dishes(props) {
             </button> */}
 
             {/* Ingredients container */}
-            {true && (
-                <div className={`dish-ingredients-container ${showIngredients ? "disable" : ""}`}>
+            {initial && (
+                <div className={`dish-ingredients-container ${!showIngredients ? "disable" : ""}`}>
                     <h1>Ingredients</h1>
                     <p className="ingredients-desc">
                         Select the ingredients you have. The ingredients you currently have are

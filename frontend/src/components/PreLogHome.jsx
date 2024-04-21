@@ -159,7 +159,7 @@ function PreLogHome(props) {
             <div className="home-main-container">
                 <div className="home-main-image"></div>
                 <h1 className="home-main-subtitle">Keeping your stomach full and your fridge empty.</h1>
-                {props.token && props.token !== "" ? (
+                {!(props.token && props.token !== "") ? (
                     <h2 className="home-secondary-subtitle">Find dishes you can cook depending on the ingredients you have available. To get personalized recipes, please log in or create an account!</h2>
                 ) : (
                     <h2 className="home-secondary-subtitle">Find dishes you can cook depending on the ingredients you have available. Set your fridge using the ingredients tab, and get your personalized results.</h2>
