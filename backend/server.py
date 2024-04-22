@@ -110,6 +110,9 @@ def create_user():
     last_name = request.json.get("lastName", None)
     # Hash Password
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+    # Check to see that all are filled
+    if not username or not email or not password or not first_name or not last_name:
+        return {"msg": "Missing fields"}, 401
     # Check if username already exists
     if(runStatement(f"SELECT * FROM user WHERE username = '{username}'").shape[0] > 0):
         return {"msg": "Username already exists"}, 401
@@ -270,6 +273,30 @@ def get_dish_general():
                                 WHERE dish_style.dish_id = {dishes["dish_id"][i]}''')
         dish_ingredients.append(ingredients.to_json(orient="records"))
         dish_styles.append(styles.to_json(orient="records"))
+    return {"dishes": dishes.to_json(orient="records"), "dish_ingredients": dish_ingredients, "dish_styles": dish_styles}
+
+# Failed attempt to increase speed
+@app.route("/get/dishes/all", methods=["GET", "POST"])
+def get_dish_all():
+    print("hi")
+    search = request.form.get("search", None)
+    if(search and search != ""):
+        dishes = runStatement(f'''SELECT * FROM dish WHERE dish_name LIKE "%{search}%";''')
+    else:
+        dishes = runStatement(f'''SELECT * FROM dish;''')
+    dish_ingredients = []
+    dish_styles = []
+    for i in dishes.index:
+        print(i)
+        ingredients = runStatement(f'''SELECT ingredient.ingredient_id, ingredient.ingredient_name FROM ingredient
+                                INNER JOIN dish_ingredient ON ingredient.ingredient_id = dish_ingredient.ingredient_id
+                                WHERE dish_ingredient.dish_id = {dishes['dish_id'][i]}''')
+        styles = runStatement(f'''SELECT food_style.style_id, food_style.style_name, food_style.style_category FROM food_style
+                                INNER JOIN dish_style ON food_style.style_id = dish_style.style_id
+                                WHERE dish_style.dish_id = {dishes["dish_id"][i]}''')
+        dish_ingredients.append(ingredients.to_json(orient="records"))
+        dish_styles.append(styles.to_json(orient="records"))
+    print("bye")
     return {"dishes": dishes.to_json(orient="records"), "dish_ingredients": dish_ingredients, "dish_styles": dish_styles}
 
 @app.route("/get/dish/<dish>", methods=["GET"])

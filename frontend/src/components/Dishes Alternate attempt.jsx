@@ -13,6 +13,7 @@ function Dishes(props) {
     const [ingSearch, setIngSearch] = useState("");
     const [showIngredients, setShowIngredients] = useState(false);
     const [initial, setInitial] = useState(false);
+    const [maxDishCount, setMaxDishCount] = useState(30);
 
     const handleIngredientClick = (ingredientId) => {
         const formData = new URLSearchParams();
@@ -54,14 +55,49 @@ function Dishes(props) {
         }
     };
 
-    function setupDish(data) {
-        // setup dish info
-        const dishesHTML = [];
+    function setupData(data) {
+        console.log(data)
         data["dishes"] = JSON.parse(data["dishes"]);
         for (let i = 0; i < data["dish_ingredients"].length; i++) {
             data["dish_ingredients"][i] = JSON.parse(data["dish_ingredients"][i]);
             data["dish_styles"][i] = JSON.parse(data["dish_styles"][i]);
         }
+        // for each dish, check to see how many user ingredients are in the dish
+        for (let i = 0; i < data["dishes"].length; i++) {
+            data["dishes"][i].user_ing_count = 0;
+            for (let j = 0; j < data["dish_ingredients"][i].length; j++) {
+                if(userIng && userIng.names && userIng.names.includes(data["dish_ingredients"][i][j].ingredient_name)) {
+                    data["dishes"][i].user_ing_count++;
+                }
+            }
+            data["dishes"][i].percentage = Math.round((data["dishes"][i].user_ing_count / data["dish_ingredients"][i].length) * 100);
+        }
+
+        // sort each dish by percentage, then ingredient count
+        data["dishes"].sort((a, b) => {
+            if(a.percentage > b.percentage) {
+                return -1;
+            } else if(a.percentage < b.percentage) {
+                return 1;
+            } else {
+                if(a.dish_ingredients.length > b.dish_ingredients.length) {
+                    return -1;
+                } else if(a.dish_ingredients.length < b.dish_ingredients.length) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+
+        data["dishes"] = data["dishes"].slice(0, maxDishCount);
+        return data;
+    }
+
+    function setupDish(data) {
+        // setup dish info
+        console.log(data)
+        const dishesHTML = [];
         setNumOfResults(() => {
             if (data["dishes"].length >= 100) {
                 setNumOfResults("100+");
@@ -160,7 +196,7 @@ function Dishes(props) {
             search: search
         }
         Object.keys(data).forEach(key => formData.append(key, data[key]));
-        fetch("/api/get/dishes/personal", {
+        fetch("/api/get/dishes/all", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -170,7 +206,8 @@ function Dishes(props) {
         })
         .then((res) => res.json())
         .then((data) => {
-            setDishes(setupDish(data));
+            console.log(data)
+            setDishes(setupDish(setupData(data)));
             setLoading(false);
         })
         .catch((error) => {

@@ -78,12 +78,6 @@ function PreLogHome(props) {
                 <div key={dishInfo.dish_id} className="dish" onClick={() => window.location.replace(`/dish?id=${dishInfo.dish_id}`)}>
                     <h2 className="dish-title">{dishInfo.dish_name}</h2>
                     <img src={dishInfo.dish_image} alt={dishInfo.dish_name} className="dish-img" />
-                    <div className="instructions-div">
-                        <h3>Instructions</h3>
-                        <div>
-                            {descHTML}
-                        </div>
-                    </div>
                     <div className="ingredients-div">
                         <h3 className="dish-subtitle">Ingredients</h3>
                         <ul className="dish-ingredients">

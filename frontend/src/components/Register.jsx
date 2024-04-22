@@ -18,7 +18,7 @@ function Register() {
             body: JSON.stringify(loginForm)
         }).then((response) => {
             if(response.status === 401) {
-                alert("Username taken. Please try again with a different username.")
+                alert("Error Registering. Username must be unique and all fields must be filled. Please try again with a different username.")
             } else {
                 alert("Account Successfully Created! Please log in.");
                 window.location.replace("/login");
